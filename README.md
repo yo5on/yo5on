@@ -1,12 +1,16 @@
 <div align="center">
 
-<img src="./ascii.svg" width="460" alt="Yo5on"/>
+<img src="./ascii.svg" width="460" alt="yo5on"/>
 
 <img src="./stats.svg" width="620" alt="Contributions in the last year"/>
 
-[github](https://github.com/yo5on)  · 
-[linkedin](https://www.linkedin.com/in/yo5on)  · 
-[email](mailto:yo5on2025@gmail.com)
+<p>
+  <a href="https://github.com/yo5on">GitHub</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.linkedin.com/in/yo5on">LinkedIn</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:yo5on2025@gmail.com">Email</a>
+</p>
 
 </div>
 
