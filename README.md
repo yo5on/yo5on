@@ -7,6 +7,8 @@
 <p>
   <a href="https://github.com/yo5on">GitHub</a>
   &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/yo5on._/">Instagram</a>
+  &nbsp;·&nbsp;
   <a href="https://www.linkedin.com/in/yo5on">LinkedIn</a>
   &nbsp;·&nbsp;
   <a href="mailto:yo5on2025@gmail.com">Email</a>
