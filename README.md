@@ -1,52 +1,41 @@
 <div align="center">
 
-<img src="./ascii.svg" width="460" alt="Your ASCII portrait"/>
+<img src="./ascii.svg" width="460" alt="Yo5on"/>
 
 <img src="./stats.svg" width="620" alt="Contributions in the last year"/>
 
-[portfolio](YOUR_PORTFOLIO_LINK)  · 
-[instagram](YOUR_INSTAGRAM_LINK)  · 
-[linkedin](YOUR_LINKEDIN_LINK)  · 
-[email](mailto:YOUR_EMAIL)
+[github](https://github.com/yo5on)  · 
+[linkedin](https://www.linkedin.com/in/yo5on)  · 
+[email](mailto:yo5on2025@gmail.com)
 
 </div>
 
 <img src="./hd-about.svg" width="620" alt="about"/>
 
-> CSE student specializing in Artificial Intelligence & Machine Learning.<br>
-> Building things, breaking things, and learning how to make them better.
-
-I'm interested in **AI/ML, robotics, web development, and intelligent systems**.
-I enjoy turning ideas into working prototypes — from AI-powered applications and dashboards
-to ESP32 robots and computer-controlled systems.
-
-Currently exploring **agentic AI, computer vision, embedded systems, and full-stack development**.
+> **CSE student specializing in AI/ML at Christ University, Bangalore.**<br>
+> **Building with AI, robotics, and embedded systems.**<br>
+> *Small, sharp tools over big, vague ideas.*
 
 <img src="./hd-stack.svg" width="620" alt="stack"/>
 
-<samp>
-python &nbsp; java &nbsp; c &nbsp; javascript &nbsp; html &nbsp; css &nbsp;
-react &nbsp; node.js &nbsp; git &nbsp; github &nbsp; arduino &nbsp; esp32 &nbsp;
-opencv &nbsp; ai/ml
-</samp>
+<samp>c   c++   java   python   html   css   esp32   arduino   git/github   vs code</samp>
 
 <img src="./hd-projects.svg" width="620" alt="projects"/>
 
-**[Agentic AI Pest Monitoring](YOUR_REPOSITORY_LINK)**  ·  <samp>python, ai/ml, web</samp><br>
-Agentic AI-based framework for pest monitoring and sustainable agricultural productivity.<br>
-Built with an interactive dashboard focused on monitoring, analysis, and resource optimization.
+**[Robotic Arm](https://github.com/yo5on/Robotic-arm)**  ·  <samp>robotics, esp32</samp><br>
+ESP32-based robotic arm project focused on embedded control and multi-axis movement.
 
-**[Gesture Controlled RC Car](YOUR_REPOSITORY_LINK)**  ·  <samp>esp32, robotics, sensors</samp><br>
-Gesture-controlled robotic vehicle using ESP32, motor control, and motion sensing.<br>
-Designed for responsive movement and autonomous/line-following applications.
+**[Line Follower](https://github.com/yo5on/line-follower)**  ·  <samp>esp32, c++, pid</samp><br>
+Line-following robot using sensor-based tracking, motor control, and PID tuning.
 
-**[Line Follower Robot](YOUR_REPOSITORY_LINK)**  ·  <samp>esp32, c++, pid</samp><br>
-High-speed line-following robot using an ESP32, TB6612FNG motor driver,<br>
-8-channel IR sensing, and PID-based control.
+**[Gesture Controlled RC Car](https://github.com/yo5on/Gesture-control-rc-car)**  ·  <samp>esp32, robotics</samp><br>
+RC car controlled through hand gestures using embedded hardware and motion sensing.
 
-**[Robotic Arm](YOUR_REPOSITORY_LINK)**  ·  <samp>esp32, robotics, servos</samp><br>
-ESP32-based 4-DOF robotic arm designed for controlled multi-axis movement<br>
-and experimentation with embedded robotics.
+**[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
+Agentic AI-based pest monitoring framework focused on sustainable agricultural productivity and resource optimization.
+
+**[Lab Work](https://github.com/yo5on/lab-work)**  ·  <samp>c, java, python, sql</samp><br>
+Collection of academic programming and laboratory work.
 
 <img src="./hd-stats.svg" width="620" alt="stats"/>
 
@@ -70,11 +59,13 @@ straight from the GitHub GraphQL API, once a day, committing only what changed.
 
 They animate with SMIL inside the SVG, because GitHub strips scripts from<br>
 READMEs — and since nothing loads from a third party, nothing here can<br>
-rate-limit or go dark.
+rate-limit or go dark. The headings are SVGs for the same reason: GitHub also<br>
+strips CSS, so an image is the only way to put this page's own typeface on them.
 
 The typeface is [JetBrains Mono](scripts/fonts), subset to just the characters<br>
-each graphic draws and inlined as base64. The portrait's grid assumes<br>
-an advance width of exactly 0.600 em, keeping the portrait consistent across viewers.
+each graphic draws and inlined as base64. That isn't only for looks: the<br>
+portrait's grid assumes an advance width of exactly 0.600 em, and a viewer whose<br>
+default monospace is narrower would otherwise see it squeezed.
 
 Language totals cover public repositories only. `year.svg` uses the portrait's<br>
 character ramp: `:` `+` `#` `@`, quiet to loud.
