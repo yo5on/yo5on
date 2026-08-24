@@ -4,7 +4,7 @@ name: refresh stats
 # trigger would make it re-run on its own commit.
 on:
   schedule:
-    - cron: "30 19 * * *"
+    - cron: "30 18 * * *"
   workflow_dispatch:
 
 permissions:
