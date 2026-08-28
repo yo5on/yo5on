@@ -28,20 +28,26 @@
 
 <img src="./hd-projects.svg" width="620" alt="projects"/>
 
-**[Robotic Arm](https://github.com/yo5on/Robotic-arm)**  ·  <samp>robotics, esp32</samp><br>
+**[Robotic Arm](https://github.com/yo5on/Robotic-arm)**  ·  <samp>robotics, esp32</samp><br>
 ESP32-based robotic arm project focused on embedded control and multi-axis movement.
 
-**[Line Follower](https://github.com/yo5on/line-follower)**  ·  <samp>esp32, c++, pid</samp><br>
+**[Line Follower](https://github.com/yo5on/line-follower)**  ·  <samp>esp32, c++, pid</samp><br>
 Line-following robot using sensor-based tracking, motor control, and PID tuning.
 
-**[Gesture Controlled RC Car](https://github.com/yo5on/Gesture-control-rc-car)**  ·  <samp>esp32, robotics</samp><br>
+**[Gesture Controlled RC Car](https://github.com/yo5on/Gesture-control-rc-car)**  ·  <samp>esp32, robotics</samp><br>
 RC car controlled through hand gestures using embedded hardware and motion sensing.
 
-**[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
+**[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
 Agentic AI-based pest monitoring framework focused on sustainable agricultural productivity and resource optimization.
 
-**[Lab Work](https://github.com/yo5on/lab-work)**  ·  <samp>c, java, python, sql</samp><br>
+**[Lab Work](https://github.com/yo5on/lab-work)**  ·  <samp>c, java, python, sql</samp><br>
 Collection of academic programming and laboratory work.
+
+**[Unity](https://github.com/yo5on/Unity)**  ·  <samp>unity, c#, game development</samp><br>
+Unity projects exploring interactive applications, scene management, gameplay systems, and C#-based development.
+
+**[LeetCode](https://github.com/yo5on/Leetcode)**  ·  <samp>c, c++, java, python, algorithms</samp><br>
+Automatically synchronized collection of LeetCode solutions organized by difficulty, covering algorithmic problem-solving across multiple programming languages.
 
 <img src="./hd-stats.svg" width="620" alt="stats"/>
 
