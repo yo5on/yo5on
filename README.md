@@ -40,6 +40,9 @@ RC car controlled through hand gestures using embedded hardware and motion sensi
 **[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
 Agentic AI-based pest monitoring framework focused on sustainable agricultural productivity and resource optimization.
 
+**[Maze Runner](https://github.com/yo5on/maze-runner)**  ·  <samp>unity, c#, game development</samp><br>
+2D side-scrolling platformer built in Unity with player combat, enemy AI, checkpoints, health, boss battles, level progression, and dynamic audio.
+
 **[Lab Work](https://github.com/yo5on/lab-work)**  ·  <samp>c, java, python, sql</samp><br>
 Collection of academic programming and laboratory work.
 
