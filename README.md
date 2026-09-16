@@ -40,6 +40,9 @@ RC car controlled through hand gestures using embedded hardware and motion sensi
 **[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
 Agentic AI-based pest monitoring framework focused on sustainable agricultural productivity and resource optimization.
 
+**[FakeGuard](https://github.com/yo5on/fakeguard)**  ·  <samp>ai/ml, python, fastapi, react, typescript</samp><br>
+Full-stack social media account risk analyzer that provides explainable risk scoring and manual-review prioritization using synthetic account data.
+
 **[Maze Runner](https://github.com/yo5on/maze-runner)**  ·  <samp>unity, c#, game development</samp><br>
 2D side-scrolling platformer built in Unity with player combat, enemy AI, checkpoints, health, boss battles, level progression, and dynamic audio.
 
