@@ -45,6 +45,10 @@ ESP32-based robotic arm project focused on embedded control and multi-axis movem
 **[Line Follower](https://github.com/yo5on/line-follower)**  ·  <samp>esp32, c++, pid</samp><br>
 Line-following robot using sensor-based tracking, motor control, and PID tuning.
 
+**[AI Personal Tutor](https://github.com/yo5on/ai-personal-tutor)**  ·  <samp>next.js, typescript, gemini, sqlite</samp><br>
+AI-powered study platform that teaches concepts step by step, generates quizzes from study materials, and tracks learning progress.
+
+
 <img src="./hd-other.svg" width="620" alt="other"/>
 
 **[Gesture Controlled RC Car](https://github.com/yo5on/Gesture-control-rc-car)**  ·  <samp>esp32, robotics</samp><br>
