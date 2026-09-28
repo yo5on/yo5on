@@ -28,6 +28,9 @@
 
 <img src="./hd-projects.svg" width="620" alt="projects"/>
 
+**[Daymark — Personalised Study Planner](https://github.com/yo5on/Personalised-study-planner)**  ·  <samp>react, typescript, vite, product design</samp><br>
+Adaptive study planner that reshapes daily plans around time, exam proximity, learner feedback, missed sessions, confidence, and personal study patterns. [Live app](https://personalised-study-planner.vercel.app)
+
 **[Robotic Arm](https://github.com/yo5on/Robotic-arm)**  ·  <samp>robotics, esp32</samp><br>
 ESP32-based robotic arm project focused on embedded control and multi-axis movement.
 
