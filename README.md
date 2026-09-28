@@ -28,8 +28,16 @@
 
 <img src="./hd-projects.svg" width="620" alt="projects"/>
 
+<img src="./hd-featured-projects.svg" width="620" alt="featured projects"/>
+
 **[Daymark — Personalised Study Planner](https://github.com/yo5on/Personalised-study-planner)**  ·  <samp>react, typescript, vite, product design</samp><br>
 Adaptive study planner that reshapes daily plans around time, exam proximity, learner feedback, missed sessions, confidence, and personal study patterns. [Live app](https://personalised-study-planner.vercel.app)
+
+**[FakeGuard](https://github.com/yo5on/fakeguard)**  ·  <samp>ai/ml, python, fastapi, react, typescript</samp><br>
+Full-stack social media account risk analyzer that provides explainable risk scoring and manual-review prioritization using synthetic account data.
+
+**[Maze Runner](https://github.com/yo5on/maze-runner)**  ·  <samp>unity, c#, game development</samp><br>
+2D side-scrolling platformer built in Unity with player combat, enemy AI, checkpoints, health, boss battles, level progression, and dynamic audio.
 
 **[Robotic Arm](https://github.com/yo5on/Robotic-arm)**  ·  <samp>robotics, esp32</samp><br>
 ESP32-based robotic arm project focused on embedded control and multi-axis movement.
@@ -37,17 +45,13 @@ ESP32-based robotic arm project focused on embedded control and multi-axis movem
 **[Line Follower](https://github.com/yo5on/line-follower)**  ·  <samp>esp32, c++, pid</samp><br>
 Line-following robot using sensor-based tracking, motor control, and PID tuning.
 
+<img src="./hd-other.svg" width="620" alt="other"/>
+
 **[Gesture Controlled RC Car](https://github.com/yo5on/Gesture-control-rc-car)**  ·  <samp>esp32, robotics</samp><br>
 RC car controlled through hand gestures using embedded hardware and motion sensing.
 
 **[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
 Agentic AI-based pest monitoring framework focused on sustainable agricultural productivity and resource optimization.
-
-**[FakeGuard](https://github.com/yo5on/fakeguard)**  ·  <samp>ai/ml, python, fastapi, react, typescript</samp><br>
-Full-stack social media account risk analyzer that provides explainable risk scoring and manual-review prioritization using synthetic account data.
-
-**[Maze Runner](https://github.com/yo5on/maze-runner)**  ·  <samp>unity, c#, game development</samp><br>
-2D side-scrolling platformer built in Unity with player combat, enemy AI, checkpoints, health, boss battles, level progression, and dynamic audio.
 
 **[Lab Work](https://github.com/yo5on/lab-work)**  ·  <samp>c, java, python, sql</samp><br>
 Collection of academic programming and laboratory work.
