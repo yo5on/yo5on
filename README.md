@@ -24,7 +24,7 @@
 
 <img src="./hd-stack.svg" width="620" alt="stack"/>
 
-<samp>c   c++   java   python   html   css   esp32   arduino   git/github   vs code</samp>
+<samp>c   c++   java   python   html   css   esp32   arduino   git/github   vs code</samp>
 
 <img src="./hd-projects.svg" width="620" alt="projects"/>
 
@@ -56,15 +56,6 @@ RC car controlled through hand gestures using embedded hardware and motion sensi
 
 **[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
 Agentic AI-based pest monitoring framework focused on sustainable agricultural productivity and resource optimization.
-
-**[Lab Work](https://github.com/yo5on/lab-work)**  ·  <samp>c, java, python, sql</samp><br>
-Collection of academic programming and laboratory work.
-
-**[Unity](https://github.com/yo5on/Unity)**  ·  <samp>unity, c#, game development</samp><br>
-Unity projects exploring interactive applications, scene management, gameplay systems, and C#-based development.
-
-**[LeetCode](https://github.com/yo5on/Leetcode)**  ·  <samp>c, c++, java, python, algorithms</samp><br>
-Automatically synchronized collection of LeetCode solutions organized by difficulty, covering algorithmic problem-solving across multiple programming languages.
 
 <img src="./hd-stats.svg" width="620" alt="stats"/>
 
