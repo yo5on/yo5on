@@ -57,8 +57,6 @@ RC car controlled through hand gestures using embedded hardware and motion sensi
 
 <img src="./langs.svg" width="620" alt="Top languages by bytes and by repo"/>
 
-<img src="./year.svg" width="620" alt="The last year, one character per day"/>
-
 </div>
 
 <img src="./hd-about-this-page.svg" width="620" alt="about this page"/>
