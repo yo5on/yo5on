@@ -1,7 +1,7 @@
 import { next, rewrite } from "@vercel/functions";
 
 export const config = {
-  matcher: ["/stats\\.svg$", "/streak\\.svg$"],
+  matcher: ["/stats.svg", "/streak.svg"],
 };
 
 const graphics: Record<string, string> = {
