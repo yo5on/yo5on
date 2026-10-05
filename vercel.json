@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/contributions.py": {
+      "includeFiles": "{stats.svg,streak.svg,scripts/generate_stats.py,scripts/fonts/**}",
+      "maxDuration": 10
+    }
+  }
+}

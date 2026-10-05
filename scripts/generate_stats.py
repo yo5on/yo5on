@@ -119,7 +119,7 @@ def fetch(login, token):
         headers={"Authorization": f"bearer {token}",
                  "Content-Type": "application/json",
                  "User-Agent": f"{login}-profile-stats"})
-    with urllib.request.urlopen(req, timeout=30) as r:
+    with urllib.request.urlopen(req, timeout=7) as r:
         payload = json.load(r)
     if "errors" in payload:
         raise SystemExit(f"GraphQL errors: {payload['errors']}")
