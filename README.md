@@ -49,9 +49,6 @@ AI-powered study platform that teaches concepts step by step, generates quizzes 
 **[Gesture Controlled RC Car](https://github.com/yo5on/Gesture-control-rc-car)**  ·  <samp>esp32, robotics</samp><br>
 RC car controlled through hand gestures using embedded hardware and motion sensing.
 
-**[Agentic AI Pest Monitoring](https://github.com/yo5on/Agentic-AI-Pest-Monitoring)**  ·  <samp>ai/ml, python, web</samp><br>
-Agentic AI-based pest monitoring framework focused on sustainable agricultural productivity and resource optimization.
-
 <img src="./hd-stats.svg" width="620" alt="stats"/>
 
 <div align="center">
