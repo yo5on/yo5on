@@ -34,6 +34,9 @@ Adaptive study planner that reshapes daily plans around time, exam proximity, le
 **[FakeGuard](https://github.com/yo5on/fakeguard)**  ·  <samp>ai/ml, python, fastapi, react, typescript</samp><br>
 Full-stack social media account risk analyzer that provides explainable risk scoring and manual-review prioritization using synthetic account data.
 
+**[AI Personal Tutor](https://github.com/yo5on/ai-personal-tutor)**  ·  <samp>next.js, typescript, gemini, sqlite</samp><br>
+AI-powered study platform that teaches concepts step by step, generates quizzes from study materials, and tracks learning progress.
+
 **[Maze Runner](https://github.com/yo5on/maze-runner)**  ·  <samp>unity, c#, game development</samp><br>
 2D side-scrolling platformer built in Unity with player combat, enemy AI, checkpoints, health, boss battles, level progression, and dynamic audio.
 
@@ -42,9 +45,6 @@ ESP32-based robotic arm project focused on embedded control and multi-axis movem
 
 **[Line Follower](https://github.com/yo5on/line-follower)**  ·  <samp>esp32, c++, pid</samp><br>
 Line-following robot using sensor-based tracking, motor control, and PID tuning.
-
-**[AI Personal Tutor](https://github.com/yo5on/ai-personal-tutor)**  ·  <samp>next.js, typescript, gemini, sqlite</samp><br>
-AI-powered study platform that teaches concepts step by step, generates quizzes from study materials, and tracks learning progress.
 
 **[Gesture Controlled RC Car](https://github.com/yo5on/Gesture-control-rc-car)**  ·  <samp>esp32, robotics</samp><br>
 RC car controlled through hand gestures using embedded hardware and motion sensing.
