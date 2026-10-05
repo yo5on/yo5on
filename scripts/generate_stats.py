@@ -373,13 +373,25 @@ def draw_heading(word):
 
 
 def draw_year(s):
-    """Seven rows by fifty-three weeks, intensity as a character."""
+    """Draw rolling-year activity in January-to-December month panels."""
     FS, LH, COLW = 9.2, 11.0, 2
     CW = FS * 0.6
-    pad_l, pad_t = LEFT, 44
-    weeks = s["weeks"]
-    ncols = len(weeks) * COLW
-    H = int(pad_t + 7 * LH + 26)
+    PANEL_X = LEFT + 16
+    PANEL_PITCH = 94.0
+    BANK_YEAR_Y = (45, 147)
+    MONTH_Y = (58, 160)
+    GRID_TOP = (64, 166)
+    GRID_WIDTH = PANEL_PITCH * 6
+    HEIGHT = 259
+    days = {}
+    for week in s["weeks"]:
+        for item in week:
+            day = date.fromisoformat(item["date"])
+            if day in days:
+                raise ValueError(f"duplicate contribution date: {day}")
+            days[day] = item
+    if not days:
+        raise ValueError("contribution calendar is empty")
 
     def level(v):
         for i, cut in enumerate((0, 2, 5, 9)):
@@ -387,15 +399,43 @@ def draw_year(s):
                 return i
         return 4
 
-    p = [head(WIDTH, H)]
+    panels = {}
+    for month in range(1, 13):
+        panels[month] = []
+        years = sorted({day.year for day in days if day.month == month})
+        for year in years:
+            dates = sorted(day for day in days if day.year == year
+                           and day.month == month)
+            first, last = dates[0], dates[-1]
+            first_weekday = (first.weekday() + 1) % 7
+            last_weekday = (last.weekday() + 1) % 7
+            grid_start = first - timedelta(days=first_weekday)
+            grid_end = last + timedelta(days=(6 - last_weekday) % 7)
+            ncols = (grid_end - grid_start).days // 7 + 1
+            cells = [[" " * COLW for _ in range(ncols)] for _ in range(7)]
+            for day in dates:
+                item = days[day]
+                row = int(item.get("weekday", (day.weekday() + 1) % 7))
+                col = (day - grid_start).days // 7
+                cells[row][col] = RAMP[level(item["contributionCount"])] * COLW
+            panels[month].append({
+                "year": year, "first": first, "last": last,
+                "ncols": ncols,
+                "rows": ["".join(row).rstrip() for row in cells],
+            })
+
+    p = [head(WIDTH, HEIGHT)]
+    active = sum(1 for item in days.values()
+                 if item["contributionCount"] > 0)
+    first_day, last_day = min(days), max(days)
     p.append(f'<g opacity="0">{fade(0.10)}'
-             + label(pad_l, 16, "THE YEAR", 9, "m-f",
+             + label(LEFT, 16, "ACTIVITY / LAST 365 DAYS", 9, "m-f",
                      extra=' letter-spacing="1.3"')
-             + label(pad_l, 32, f"{s['active']} of "
-                     f"{sum(len(w) for w in weeks)} days had a contribution", 11)
+             + label(LEFT, 32, f"{active} of {len(days)} days had a contribution  /  "
+                     f"{first_day.isoformat()} to {last_day.isoformat()}", 10)
              + '</g>')
 
-    # ramp legend, so the encoding is never carried by shade alone
+    # Ramp legend, so intensity is never carried by shade alone.
     lx = WIDTH - 6
     p.append(f'<g opacity="0">{fade(1.30)}'
              + label(lx - 78, 32, "less", 9, "m-f", "end")
@@ -403,41 +443,82 @@ def draw_year(s):
              f'font-size="{FS}">{" ".join(RAMP[1:])}</text>'
              + label(lx, 32, "more", 9, "m-f", "end") + '</g>')
 
-    for r in range(7):
-        chars = []
-        for w in weeks:
-            day = next((d for d in w if d.get("weekday") == r), None)
-            v = day["contributionCount"] if day else 0
-            chars.append(RAMP[level(v)] * COLW)
-        line = "".join(chars).rstrip()
-        if not line:
-            continue
-        y = pad_t + r * LH
-        w_px = max(len(line), 1) * CW
-        cid = f"ry{r}"
-        delay = 0.30 + r * 0.07
-        p.append(f'<clipPath id="{cid}"><rect x="{pad_l}" y="{y}" '
-                 f'height="{LH}" width="0"><animate attributeName="width" '
-                 f'from="0" to="{w_px:.1f}" begin="{delay:.2f}s" dur="0.40s" '
-                 f'fill="freeze"/></rect></clipPath>')
-        safe = line.replace("&", "&amp;").replace("<", "&lt;")
-        p.append(f'<g clip-path="url(#{cid})"><text xml:space="preserve" '
-                 f'x="{pad_l}" y="{y + FS - 0.6:.1f}" class="d-f" '
-                 f'font-size="{FS}">{safe}</text></g>')
+    # Show the years above contiguous month runs; split-month panels carry
+    # their own year and date-range labels.
+    for bank in range(2):
+        first_month = bank * 6 + 1
+        month_index = 0
+        while month_index < 6:
+            month = first_month + month_index
+            groups = panels[month]
+            x = PANEL_X + month_index * PANEL_PITCH
+            if len(groups) == 1:
+                year = groups[0]["year"]
+                stop = month_index + 1
+                while stop < 6:
+                    following = panels[first_month + stop]
+                    if len(following) != 1 or following[0]["year"] != year:
+                        break
+                    stop += 1
+                center = PANEL_X + (month_index + stop) * PANEL_PITCH / 2
+                p.append(label(center, BANK_YEAR_Y[bank], str(year), 8, "m-f",
+                               "middle"))
+                month_index = stop
+            else:
+                offset = 0
+                for group in groups:
+                    center = x + (offset + group["ncols"] / 2) * COLW * CW
+                    short_year = str(group["year"])[-2:]
+                    sublabel = (f"{short_year} {group['first'].day:02d}-"
+                                f"{group['last'].day:02d}")
+                    p.append(label(center, BANK_YEAR_Y[bank], sublabel, 7.4,
+                                   "m-f", "middle"))
+                    offset += group["ncols"] + 1
+                month_index += 1
 
-    for r, lab in ((1, "mon"), (3, "wed"), (5, "fri")):
-        p.append(label(pad_l - 7, pad_t + r * LH + FS - 0.6, lab, 9, "m-f",
-                       "end"))
+    for month in range(1, 13):
+        bank = (month - 1) // 6
+        col = (month - 1) % 6
+        x = PANEL_X + col * PANEL_PITCH
+        p.append(label(x, MONTH_Y[bank], MON[month - 1].upper(), 9, "m-f"))
 
-    last_m, last_x = None, -999.0
-    base_y = pad_t + 7 * LH + 13
-    for i, w in enumerate(weeks):
-        m = int(w[0]["date"][5:7])
-        x = pad_l + i * COLW * CW
-        if m != last_m and i < len(weeks) - 1 and x - last_x >= 34:
-            p.append(label(x, base_y, MON[m - 1], 9, "m-f"))
-            last_x = x
-        last_m = m
+    # One horizontal wipe per weekday row spans both month-panel bands.
+    for row in range(7):
+        delay = 0.30 + row * 0.07
+        p.append(f'<clipPath id="yr{row}">')
+        for bank in range(2):
+            y = GRID_TOP[bank] + row * LH
+            p.append(f'<rect x="{PANEL_X}" y="{y}" height="{LH}" width="0">'
+                     f'<animate attributeName="width" from="0" to="{GRID_WIDTH:.1f}" '
+                     f'begin="{delay:.2f}s" dur="0.40s" fill="freeze"/>'
+                     f'</rect>')
+        p.append('</clipPath>')
+        p.append(f'<g clip-path="url(#yr{row})">')
+        for bank in range(2):
+            first_month = bank * 6 + 1
+            for col in range(6):
+                month = first_month + col
+                x = PANEL_X + col * PANEL_PITCH
+                offset = 0
+                for group_index, group in enumerate(panels[month]):
+                    line = group["rows"][row]
+                    if line.strip():
+                        gx = x + offset * COLW * CW
+                        baseline = GRID_TOP[bank] + row * LH + FS - 0.6
+                        safe = (line.replace("&", "&amp;").replace("<", "&lt;")
+                                    .replace(">", "&gt;"))
+                        p.append(f'<text xml:space="preserve" x="{gx:.1f}" '
+                                 f'y="{baseline:.1f}" class="d-f" '
+                                 f'font-size="{FS}">{safe}</text>')
+                    offset += group["ncols"]
+                    if group_index < len(panels[month]) - 1:
+                        offset += 1
+        p.append('</g>')
+
+    for bank in range(2):
+        for row, lab in ((1, "mon"), (3, "wed"), (5, "fri")):
+            y = GRID_TOP[bank] + row * LH + FS - 0.6
+            p.append(label(PANEL_X - 7, y, lab, 9, "m-f", "end"))
 
     p.append("</svg>")
     return "".join(p)
