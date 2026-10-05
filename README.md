@@ -61,24 +61,9 @@ RC car controlled through hand gestures using embedded hardware and motion sensi
 
 <img src="./hd-about-this-page.svg" width="620" alt="about this page"/>
 
-This profile is built around a collection of generated SVG graphics and custom<br>
-tools designed to keep the page lightweight, consistent, and easy to maintain.
+This profile uses custom SVG graphics and small automation scripts to keep the page<br>
+lightweight, consistent, and automatically updated.
 
-`ascii.svg` is generated from a photo using<br>
-[`scripts/make_portrait.py`](scripts/make_portrait.py), which converts the image<br>
-into a monochrome ASCII portrait. The contribution statistics and other profile<br>
-graphics are generated automatically using<br>
-[`scripts/generate_stats.py`](scripts/generate_stats.py) and GitHub's GraphQL API.
-
-The stats are refreshed automatically through<br>
-[GitHub Actions](.github/workflows/stats.yml), so contribution counts, streaks,<br>
-language statistics, and the yearly activity map stay up to date without<br>
-manually regenerating the graphics.
-
-The SVG graphics use SMIL animations to create the reveal effect while keeping<br>
-everything self-contained. No external image or statistics service is required,<br>
-so the profile doesn't depend on third-party services to display its graphics.
-
-The page uses JetBrains Mono to keep the typography consistent across the<br>
-different SVG graphics. The font is embedded where necessary so the ASCII portrait<br>
-maintains its intended character spacing across different viewers.
+The portrait is generated with [`scripts/make_portrait.py`](scripts/make_portrait.py),<br>
+while [`scripts/generate_stats.py`](scripts/generate_stats.py) and<br>
+[GitHub Actions](.github/workflows/stats.yml) keep the profile statistics refreshed.
