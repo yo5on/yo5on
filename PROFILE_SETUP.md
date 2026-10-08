@@ -101,21 +101,15 @@ README.md  (rendered on github.com/<YOUR_USERNAME>)
 <samp><b>GitHub Profile Repository Setup</b></samp>
 </div>
 
-1. <samp>Create a **public** repository named exactly `<YOUR_USERNAME>` (for example</samp>
-<samp>`github.com/<YOUR_USERNAME>/<YOUR_USERNAME>`). GitHub treats this name as your profile repository.</samp>
-2. <samp>Put `README.md` at the repository root on the default branch. Whatever it</samp>
-<samp>contains appears at the top of `github.com/<YOUR_USERNAME>`.</samp>
-3. <samp>The workflow in this repository pushes to the branch it runs on, so keep the</samp>
-<samp>default branch as the one you edit (normally `main`).</samp>
+1. <samp>Create a **public** repository named exactly `<YOUR_USERNAME>` (for example <samp>`github.com/<YOUR_USERNAME>/<YOUR_USERNAME>`). GitHub treats this name as your profile repository.</samp>
+2. <samp>Put `README.md` at the repository root on the default branch. Whatever it <samp>contains appears at the top of `github.com/<YOUR_USERNAME>`.</samp>
+3. <samp>The workflow in this repository pushes to the branch it runs on, so keep the <samp>default branch as the one you edit (normally `main`).</samp>
 
 <samp>Rendering rules that shape this design:</samp>
 
-- <samp>Raw HTML is allowed but sanitised: no `<style>`, no `style=` attributes, no</samp>
-<samp>`<script>`. Attributes such as `align`, `width` and `alt` survive.</samp>
-- <samp>Images are proxied by GitHub. Relative paths (`./ascii.svg`) are served from</samp>
-<samp>the repository; absolute URLs (the Vercel graphics) are fetched through GitHub's image proxy.</samp>
-- <samp>SVGs are rendered as images, so their embedded CSS and SMIL animation work,</samp>
-<samp>but they cannot load external fonts or run scripts.</samp>
+- <samp>Raw HTML is allowed but sanitised: no `<style>`, no `style=` attributes, no <samp>`<script>`. Attributes such as `align`, `width` and `alt` survive.</samp>
+- <samp>Images are proxied by GitHub. Relative paths (`./ascii.svg`) are served from <samp>the repository; absolute URLs (the Vercel graphics) are fetched through GitHub's image proxy.</samp>
+- <samp>SVGs are rendered as images, so their embedded CSS and SMIL animation work, <samp>but they cannot load external fonts or run scripts.</samp>
 
 ---
 
@@ -125,22 +119,14 @@ README.md  (rendered on github.com/<YOUR_USERNAME>)
 
 <samp>The page follows a few rules rather than a template:</samp>
 
-- <samp>**One column.** Every graphic is 620 px wide (`WIDTH` in</samp>
-<samp>`generate_stats.py`, and `width="620"` in the README). The portrait is narrower at 460 px so it reads as the page's cover.</samp>
-- <samp>**Centred cover, left-aligned body.** The portrait, the contribution total and</samp>
-<samp>the links sit inside `<div align="center">`; the sections below are left-aligned.</samp>
-- <samp>**One typeface.** JetBrains Mono is embedded in every SVG. Plain text that</samp>
-<samp>should look monospaced (the stack line, project tags) uses `<samp>`, which GitHub renders in a monospace face without needing styles.</samp>
-- <samp>**SVG headings.** Section headings are SVGs (section 6), so they use the same</samp>
-<samp>face as the graphics instead of GitHub's sans-serif headings.</samp>
-- <samp>**Projects as text.** Each project is a bold link, a `<samp>` tag line and one</samp>
-<samp>sentence. No cards or badges.</samp>
-- <samp>**Restrained colour.** Graphics use a grey palette defined in</samp>
-<samp>`generate_stats.py` (`LIGHT` and `DARK`): data ink, emphasis, dimmed labels, and hairline rules. Backgrounds are transparent.</samp>
-- <samp>**Light and dark mode.** Each SVG carries both palettes and switches with an</samp>
-<samp>internal `@media (prefers-color-scheme: dark)` rule. Section 13 covers the limits of this.</samp>
-- <samp>**Motion once.** Charts reveal left to right with SMIL animations that freeze</samp>
-<samp>at their final frame; nothing loops.</samp>
+- <samp>**One column.** Every graphic is 620 px wide (`WIDTH` in <samp>`generate_stats.py`, and `width="620"` in the README). The portrait is narrower at 460 px so it reads as the page's cover.</samp>
+- <samp>**Centred cover, left-aligned body.** The portrait, the contribution total and <samp>the links sit inside `<div align="center">`; the sections below are left-aligned.</samp>
+- <samp>**One typeface.** JetBrains Mono is embedded in every SVG. Plain text that <samp>should look monospaced (the stack line, project tags) uses `<samp>`, which GitHub renders in a monospace face without needing styles.</samp>
+- <samp>**SVG headings.** Section headings are SVGs (section 6), so they use the same <samp>face as the graphics instead of GitHub's sans-serif headings.</samp>
+- <samp>**Projects as text.** Each project is a bold link, a `<samp>` tag line and one <samp>sentence. No cards or badges.</samp>
+- <samp>**Restrained colour.** Graphics use a grey palette defined in <samp>`generate_stats.py` (`LIGHT` and `DARK`): data ink, emphasis, dimmed labels, and hairline rules. Backgrounds are transparent.</samp>
+- <samp>**Light and dark mode.** Each SVG carries both palettes and switches with an <samp>internal `@media (prefers-color-scheme: dark)` rule. Section 13 covers the limits of this.</samp>
+- <samp>**Motion once.** Charts reveal left to right with SMIL animations that freeze <samp>at their final frame; nothing loops.</samp>
 
 ---
 
@@ -153,14 +139,10 @@ README.md  (rendered on github.com/<YOUR_USERNAME>)
 <samp>What `make_portrait.py` does:</samp>
 
 1. <samp>Opens the photo and applies an optional crop (`--crop left,top,right,bottom`).</samp>
-2. <samp>Removes the background with `rembg` (ONNX Runtime underneath) and composites</samp>
-<samp>the subject onto white, so the background maps to blank characters.</samp>
-3. <samp>Evens local contrast with OpenCV (bilateral filter, then CLAHE) and applies</samp>
-<samp>a darkening curve.</samp>
-4. <samp>Downsamples to 90 columns (`--cols`) and maps each cell's brightness onto the</samp>
-<samp>13-character ramp `` .`:-=+*cs#%@`` (space is blank).</samp>
-5. <samp>Writes `ascii.svg`: one `<text>` row per line, each revealed by a clip-path</samp>
-<samp>wipe with a cursor, staggered top to bottom. Ink is `#6e7681`, switching to `#c9d1d9` in dark mode.</samp>
+2. <samp>Removes the background with `rembg` (ONNX Runtime underneath) and composites <samp>the subject onto white, so the background maps to blank characters.</samp>
+3. <samp>Evens local contrast with OpenCV (bilateral filter, then CLAHE) and applies <samp>a darkening curve.</samp>
+4. <samp>Downsamples to 90 columns (`--cols`) and maps each cell's brightness onto the <samp>13-character ramp `` .`:-=+*cs#%@`` (space is blank).</samp>
+5. <samp>Writes `ascii.svg`: one `<text>` row per line, each revealed by a clip-path <samp>wipe with a cursor, staggered top to bottom. Ink is `#6e7681`, switching to `#c9d1d9` in dark mode.</samp>
 
 <samp>Then `embed_portrait_font.py` inlines `scripts/fonts/jbmono-ramp.woff2` and points the SVG at it. This pins the character advance to 0.6 em so the grid does not shrink on systems whose default monospace is narrower.</samp>
 
@@ -189,8 +171,7 @@ deactivate
 ```
 
 - <samp>The first run downloads a background-removal model of about 176 MB.</samp>
-- <samp>`--preview` also prints the ASCII to the terminal, which is the quickest way</samp>
-<samp>to tune the crop.</samp>
+- <samp>`--preview` also prints the ASCII to the terminal, which is the quickest way <samp>to tune the crop.</samp>
 - <samp>A second positional argument changes the output path (default `ascii.svg`).</samp>
 - <samp>`embed_portrait_font.py` is idempotent; running it twice changes nothing.</samp>
 - <samp>Keep the virtual environment and the photo out of the repository.</samp>
@@ -215,10 +196,8 @@ for word in ("about", "stack", "projects", "stats", "about this page"):
 <samp>To add or rename a heading:</samp>
 
 1. <samp>Edit the tuple.</samp>
-2. <samp>Check the word's letters are in the heading subset. Any letter that isn't</samp>
-<samp>falls back to the viewer's monospace; re-subset the font from the [JetBrains Mono release](https://github.com/JetBrains/JetBrainsMono) if you need it.</samp>
-3. <samp>Run the generator (section 11) and reference the new file in the README</samp>
-<samp>with `width="620"`.</samp>
+2. <samp>Check the word's letters are in the heading subset. Any letter that isn't <samp>falls back to the viewer's monospace; re-subset the font from the [JetBrains Mono release](https://github.com/JetBrains/JetBrainsMono) if you need it.</samp>
+3. <samp>Run the generator (section 11) and reference the new file in the README <samp>with `width="620"`.</samp>
 
 <samp>Markdown headings (`##`) would render in GitHub's own font with GitHub's underline, and there is no way to restyle them. SVG headings are the only way to keep the headings in the same face and colours as the graphics.</samp>
 
@@ -230,10 +209,8 @@ for word in ("about", "stack", "projects", "stats", "about this page"):
 
 <samp>`scripts/generate_stats.py` makes one GraphQL request to `https://api.github.com/graphql` asking for:</samp>
 
-- <samp>`contributionsCollection.contributionCalendar` over the last 365 days. The</samp>
-<samp>window is pinned to whole UTC days, so repeated runs on the same day give identical output.</samp>
-- <samp>The user's first 100 **public, owned, non-fork** repositories, with up to 12</samp>
-<samp>languages each, ordered by size. Pinning `privacy: PUBLIC` keeps results the same no matter which token is used.</samp>
+- <samp>`contributionsCollection.contributionCalendar` over the last 365 days. The <samp>window is pinned to whole UTC days, so repeated runs on the same day give identical output.</samp>
+- <samp>The user's first 100 **public, owned, non-fork** repositories, with up to 12 <samp>languages each, ordered by size. Pinning `privacy: PUBLIC` keeps results the same no matter which token is used.</samp>
 
 <samp>From that it computes:</samp>
 
@@ -317,19 +294,13 @@ jobs:
           git push
 ```
 
-- <samp>**Schedule:** `30 18 * * *` is 18:30 UTC every day. Cron in Actions is always</samp>
-<samp>UTC, and scheduled runs can start a few minutes late.</samp>
-- <samp>**Manual runs:** `workflow_dispatch` adds a "Run workflow" button on the</samp>
-<samp>Actions tab.</samp>
-- <samp>**Token:** the built-in `GITHUB_TOKEN`; there's no secret to create.</samp>
-<samp>`GH_LOGIN` comes from the repository owner, so it is correct in your fork automatically.</samp>
-- <samp>**Permissions:** `contents: write` is the only permission, needed to push the</samp>
-<samp>commit.</samp>
-- <samp>**Commits:** only the listed generated files are staged, and only when they</samp>
-<samp>changed. `stats.svg` usually changes every day because the 365-day window moves. The headings normally never change.</samp>
+- <samp>**Schedule:** `30 18 * * *` is 18:30 UTC every day. Cron in Actions is always <samp>UTC, and scheduled runs can start a few minutes late.</samp>
+- <samp>**Manual runs:** `workflow_dispatch` adds a "Run workflow" button on the <samp>Actions tab.</samp>
+- <samp>**Token:** the built-in `GITHUB_TOKEN`; there's no secret to create. <samp>`GH_LOGIN` comes from the repository owner, so it is correct in your fork automatically.</samp>
+- <samp>**Permissions:** `contents: write` is the only permission, needed to push the <samp>commit.</samp>
+- <samp>**Commits:** only the listed generated files are staged, and only when they <samp>changed. `stats.svg` usually changes every day because the 365-day window moves. The headings normally never change.</samp>
 - <samp>**Concurrency:** a manual run and a scheduled run queue instead of racing.</samp>
-- <samp>**No loops:** pushes made with `GITHUB_TOKEN` do not trigger workflows, and</samp>
-<samp>the workflow has no `push` trigger anyway.</samp>
+- <samp>**No loops:** pushes made with `GITHUB_TOKEN` do not trigger workflows, and <samp>the workflow has no `push` trigger anyway.</samp>
 
 <samp>Because the workflow declares `contents: write` itself, it can push even if the repository's default workflow permissions are read-only. Only an organisation or enterprise policy that caps token permissions would block it. Actions must be enabled for the repository (Settings -> Actions -> General).</samp>
 
@@ -341,19 +312,13 @@ jobs:
 
 <samp>`https://<YOUR_PROJECT>.vercel.app/stats.svg` and `/streak.svg` are produced per request:</samp>
 
-1. <samp>**`middleware.ts`** matches exactly `/stats.svg` and `/streak.svg` and</samp>
-<samp>rewrites them to `/api/contributions?graphic=stats` or `?graphic=streak`. It uses `next` and `rewrite` from `@vercel/functions` (pinned in `package.json`).</samp>
-2. <samp>**`api/contributions.py`** is a Python function (a</samp>
-<samp>`BaseHTTPRequestHandler` subclass named `handler`). It imports `scripts/generate_stats.py`, fetches once, and draws both graphics from the same data.</samp>
+1. <samp>**`middleware.ts`** matches exactly `/stats.svg` and `/streak.svg` and <samp>rewrites them to `/api/contributions?graphic=stats` or `?graphic=streak`. It uses `next` and `rewrite` from `@vercel/functions` (pinned in `package.json`).</samp>
+2. <samp>**`api/contributions.py`** is a Python function (a <samp>`BaseHTTPRequestHandler` subclass named `handler`). It imports `scripts/generate_stats.py`, fetches once, and draws both graphics from the same data.</samp>
 3. <samp>**Caching:**</samp>
-- <samp>In memory, per function instance, for 15 minutes. The second graphic</samp>
-<samp>usually comes from memory.</samp>
-- <samp>Successful responses send `Cache-Control: public, max-age=0, s-maxage=900`,</samp>
-<samp>so Vercel's edge caches them for 15 minutes and browsers revalidate.</samp>
-4. <samp>**Fallback:** if the fetch fails (no token, GraphQL error, timeout), the</samp>
-<samp>function serves the last in-memory result if it is under 24 hours old; otherwise it serves the committed `stats.svg`/`streak.svg`. Fallbacks are sent with `Cache-Control: no-store`. The response is always a 200 SVG, and no error text is ever included.</samp>
-5. <samp>**Diagnostics:** every SVG response carries `X-Stats-Source: github`,</samp>
-<samp>`memory` or `fallback`. Any other `graphic` value returns 404.</samp>
+- <samp>In memory, per function instance, for 15 minutes. The second graphic <samp>usually comes from memory.</samp>
+- <samp>Successful responses send `Cache-Control: public, max-age=0, s-maxage=900`, <samp>so Vercel's edge caches them for 15 minutes and browsers revalidate.</samp>
+4. <samp>**Fallback:** if the fetch fails (no token, GraphQL error, timeout), the <samp>function serves the last in-memory result if it is under 24 hours old; otherwise it serves the committed `stats.svg`/`streak.svg`. Fallbacks are sent with `Cache-Control: no-store`. The response is always a 200 SVG, and no error text is ever included.</samp>
+5. <samp>**Diagnostics:** every SVG response carries `X-Stats-Source: github`, <samp>`memory` or `fallback`. Any other `graphic` value returns 404.</samp>
 
 <samp>`vercel.json` bundles what the function reads at runtime:</samp>
 
@@ -386,14 +351,11 @@ jobs:
 - <samp>Root directory: the repository root</samp>
 - <samp>No build command and no output directory</samp>
 4. <samp>Add environment variables (Project -> Settings -> Environment Variables):</samp>
-- <samp>`GITHUB_TOKEN`: a fine-grained personal access token with read-only access</samp>
-<samp>to public repositories. No extra permissions are needed, because the query only reads public data.</samp>
-- <samp>`GH_LOGIN`: `<YOUR_USERNAME>`. The function's default is `yo5on`, so this</samp>
-<samp>must be set.</samp>
+- <samp>`GITHUB_TOKEN`: a fine-grained personal access token with read-only access <samp>to public repositories. No extra permissions are needed, because the query only reads public data.</samp>
+- <samp>`GH_LOGIN`: `<YOUR_USERNAME>`. The function's default is `yo5on`, so this <samp>must be set.</samp>
 
 <samp>The workflow and Vercel use different tokens. Repository data is pinned to public repositories, but the contribution calendar can count private contributions differently depending on whose token asks and on your profile's private-contribution setting. The live graphics and the committed fallback can therefore differ slightly.</samp>
-5. <samp>Deploy. Vercel installs `@vercel/functions` from `package.json`, detects the</samp>
-<samp>Python function under `api/`, and runs `middleware.ts` in front of it.</samp>
+5. <samp>Deploy. Vercel installs `@vercel/functions` from `package.json`, detects the <samp>Python function under `api/`, and runs `middleware.ts` in front of it.</samp>
 6. <samp>Check the deployment:</samp>
 
    ```bash
@@ -401,8 +363,7 @@ jobs:
    ```
 
 <samp>Expect `200`, `Content-Type: image/svg+xml` and `X-Stats-Source: github`. If it says `fallback`, see section 13.</samp>
-7. <samp>Point the README at `https://<YOUR_PROJECT>.vercel.app/stats.svg` and</samp>
-<samp>`/streak.svg`.</samp>
+7. <samp>Point the README at `https://<YOUR_PROJECT>.vercel.app/stats.svg` and <samp>`/streak.svg`.</samp>
 
 <samp>Never commit tokens. `GITHUB_TOKEN` and `GH_LOGIN` live only in Vercel's settings; the Actions workflow uses its own built-in token.</samp>
 
@@ -463,8 +424,7 @@ curl.exe -sI "http://127.0.0.1:8000/?graphic=stats"
 
 <samp>Linux/macOS: the same two commands, with `curl` instead of `curl.exe`.</samp>
 
-- <samp>With `GITHUB_TOKEN` set in that terminal, the response says</samp>
-<samp>`X-Stats-Source: github`.</samp>
+- <samp>With `GITHUB_TOKEN` set in that terminal, the response says <samp>`X-Stats-Source: github`.</samp>
 - <samp>Without it, the response says `fallback` and returns the committed SVG.</samp>
 - <samp>Stop the server with Ctrl+C.</samp>
 
@@ -499,8 +459,7 @@ curl.exe -sI "http://127.0.0.1:8000/?graphic=stats"
 
 <samp>**Stats or streak don't load.**</samp>
 - <samp>Open `https://<YOUR_PROJECT>.vercel.app/stats.svg` directly.</samp>
-- <samp>If it 404s, the middleware didn't run: check that `middleware.ts` is at the</samp>
-<samp>repository root and that the deployment installed `@vercel/functions`.</samp>
+- <samp>If it 404s, the middleware didn't run: check that `middleware.ts` is at the <samp>repository root and that the deployment installed `@vercel/functions`.</samp>
 - <samp>If it errors, look at the function logs in Vercel.</samp>
 
 <samp>**The fallback keeps appearing** (`X-Stats-Source: fallback`).</samp>
@@ -511,26 +470,19 @@ curl.exe -sI "http://127.0.0.1:8000/?graphic=stats"
 <samp>Fix the variable and redeploy. Environment variable changes apply only to new deployments.</samp>
 
 <samp>**GitHub Actions fails.**</samp>
-- <samp>Push rejected with 403: check that the `permissions:` block is still in</samp>
-<samp>the workflow, and that no organisation policy restricts `GITHUB_TOKEN` to read-only.</samp>
-- <samp>Push rejected as non-fast-forward: someone pushed during the run. Run the</samp>
-<samp>workflow again.</samp>
-- <samp>`GraphQL errors` or `no such user`: check that the repository owner is the</samp>
-<samp>account you mean to summarise.</samp>
+- <samp>Push rejected with 403: check that the `permissions:` block is still in <samp>the workflow, and that no organisation policy restricts `GITHUB_TOKEN` to read-only.</samp>
+- <samp>Push rejected as non-fast-forward: someone pushed during the run. Run the <samp>workflow again.</samp>
+- <samp>`GraphQL errors` or `no such user`: check that the repository owner is the <samp>account you mean to summarise.</samp>
 
 <samp>**GraphQL authentication failure locally.** `generate_stats.py` exits with `GITHUB_TOKEN is not set` when the variable is empty. An HTTP 401 means GitHub rejected the token: it was mistyped, has expired, or was revoked.</samp>
 
 <samp>**Fonts look wrong.**</samp>
-- <samp>The SVGs embed their fonts, so they shouldn't depend on the viewer's machine.</samp>
-<samp>If a character renders in another face, it isn't in that subset; see `scripts/fonts/README.md`.</samp>
-- <samp>If the portrait looks narrower than intended, `embed_portrait_font.py` wasn't</samp>
-<samp>run after regenerating it.</samp>
+- <samp>The SVGs embed their fonts, so they shouldn't depend on the viewer's machine. <samp>If a character renders in another face, it isn't in that subset; see `scripts/fonts/README.md`.</samp>
+- <samp>If the portrait looks narrower than intended, `embed_portrait_font.py` wasn't <samp>run after regenerating it.</samp>
 
 <samp>**Portrait generation problems.**</samp>
-- <samp>`ModuleNotFoundError`: install the five packages from section 5 in the</samp>
-<samp>active virtual environment.</samp>
-- <samp>A washed-out or featureless face: the photo is too small, flat-lit or loosely</samp>
-<samp>cropped. Use `--preview` while adjusting `--crop`.</samp>
+- <samp>`ModuleNotFoundError`: install the five packages from section 5 in the <samp>active virtual environment.</samp>
+- <samp>A washed-out or featureless face: the photo is too small, flat-lit or loosely <samp>cropped. Use `--preview` while adjusting `--crop`.</samp>
 - <samp>The first run pauses while it downloads the model.</samp>
 
 <samp>**Dark/light rendering problems.** The SVGs switch palettes with `prefers-color-scheme`. Inside an `<img>`, browsers can evaluate that from the browser or OS preference rather than the GitHub theme. If your GitHub theme differs from your system theme, the graphics can show the other palette. The way around this is GitHub's `<picture>` element with separate light and dark files. This repository doesn't do that.</samp>
