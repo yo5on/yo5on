@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/yo5on/yo5on/main/hd-projects.svg" width="620" alt="projects"/>
-
 <samp><b>GITHUB PROFILE SETUP</b></samp>
 
 <samp>github · markdown · github actions · python · vercel · svg</samp>
