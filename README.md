@@ -1,9 +1,6 @@
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./ascii-dark.svg">
-  <img src="./ascii.svg" width="460" alt="yo5on"/>
-</picture>
+<img src="./ascii.svg" width="460" alt="yo5on"/>
 
 <img src="https://yo5on.vercel.app/stats.svg" width="620" alt="Contributions in the last year"/>
 
