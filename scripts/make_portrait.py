@@ -32,10 +32,12 @@ Dark mode needs its own file, not just a lighter ink. The ramp encodes shadow
 as density, which only reads correctly when the ink is darker than the page;
 recolour the same characters light-on-dark and the portrait turns into a
 negative (bright hair, hollow eyes). --dark inverts the mapping instead: light
-areas of the face get dense characters, the matte stays blank, and the subject
-never drops below the first visible step so its outline holds against the dark
-page. Each file bakes its ink in with no media query, and the README picks one
-with <picture>, which follows the GitHub theme rather than the OS.
+areas of the face get dense characters and the matte stays blank. A straight
+inversion is too thin, though — dark hair carries most of the light portrait's
+weight and would dissolve to dots — so the outline keeps the light portrait's
+own characters and the interior has a mid-tone floor. Each file bakes its ink
+in with no media query, and the README picks one with <picture>, which follows
+the GitHub theme rather than the OS.
 
 Motion is SMIL, because GitHub strips <script> from READMEs: each row is
 revealed by a clipPath wipe with a cursor block riding its edge, staggered top
@@ -54,7 +56,9 @@ COLS = 90                  # below ~88 the face muddies; far above it dominates
 CLAHE_CLIP = 3.0           # higher amplifies skin texture into noise
 GAMMA = 1.0                # ramp mapping exponent
 CURVE = 1.7                # the darkening curve — the difference-maker
-DARK_GAMMA = 0.45          # --dark: lifts the face so the inverted ramp fills
+DARK_FLOOR = 6             # --dark: lowest step inside the subject ("+")
+DARK_GAMMA = 0.7           # --dark: lifts the face; ~73% of the light ink,
+                           # which reads as equal weight light-on-dark
 CROP_BOTTOM = 0.0          # fraction to trim off the bottom (torso, chair)
 ROW_RATIO = 0.48           # monospace cells are about twice as tall as wide
 
@@ -101,19 +105,29 @@ def to_lines(img, matte, cols=COLS, gamma=GAMMA, dark=False):
     subject = list(matte.resize((cols, rows), Image.BILINEAR).getdata())
     n = len(RAMP)
 
-    def cell(i):
-        v = px[i] / 255.0
-        if not dark:
-            return RAMP[min(n - 1, int((1 - v) ** gamma * n))]
-        # light-on-dark: brightness is density; keep the matte blank and the
-        # subject at least one step above it so the silhouette survives
-        if subject[i] < 128:
+    def light_cell(i):
+        return RAMP[min(n - 1, int((1 - px[i] / 255.0) ** gamma * n))]
+
+    def is_matte(r, c):
+        return not (0 <= r < rows and 0 <= c < cols) or subject[r * cols + c] < 128
+
+    def dark_cell(r, c):
+        # light-on-dark: brightness is density. The outline keeps the light
+        # portrait's own characters, so the silhouette and its soft edge match;
+        # inside, the floor holds dark hair at a visible mid-tone instead of
+        # letting it dissolve into the page.
+        i = r * cols + c
+        if is_matte(r, c):
             return " "
-        return RAMP[max(1, min(n - 1, round(v ** DARK_GAMMA * (n - 1))))]
+        if any(is_matte(r + dr, c + dc) for dr in (-1, 0, 1) for dc in (-1, 0, 1)):
+            return light_cell(i)
+        v = px[i] / 255.0
+        return RAMP[round(DARK_FLOOR + v ** DARK_GAMMA * (n - 1 - DARK_FLOOR))]
 
     out = []
     for r in range(rows):
-        out.append("".join(cell(r * cols + c) for c in range(cols)).rstrip())
+        out.append("".join(dark_cell(r, c) if dark else light_cell(r * cols + c)
+                           for c in range(cols)).rstrip())
 
     while out and not out[0].strip():
         out.pop(0)
