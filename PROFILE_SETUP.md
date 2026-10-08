@@ -4,7 +4,11 @@ How this GitHub profile is built, and how to recreate the same system for your
 own account. Replace `<YOUR_USERNAME>` with your GitHub username and
 `<YOUR_PROJECT>` with your Vercel project name throughout.
 
-## 1. What this profile architecture does
+---
+
+<div align="center">
+<samp><b>01 / WHAT THIS PROFILE ARCHITECTURE DOES</b></samp>
+</div>
 
 The profile is a single `README.md` that GitHub renders on your profile page.
 Every visual element that needs the page's own typeface is an SVG, because
@@ -38,7 +42,11 @@ There are three kinds of graphic:
 Everything uses the Python standard library at runtime, an embedded subset of
 JetBrains Mono, and no third-party image or statistics service.
 
-## 2. Repository structure
+---
+
+<div align="center">
+<samp><b>02 / REPOSITORY STRUCTURE</b></samp>
+</div>
 
 ```
 .
@@ -82,7 +90,11 @@ JetBrains Mono, and no third-party image or statistics service.
 - `api/`, `middleware.ts`, `vercel.json`, `package.json`: the Vercel deployment that serves `stats.svg` and `streak.svg` with fresh data.
 - `.github/workflows/`: the scheduled job that regenerates and commits graphics.
 
-## 3. GitHub profile repository setup
+---
+
+<div align="center">
+<samp><b>03 / GITHUB PROFILE REPOSITORY SETUP</b></samp>
+</div>
 
 1. Create a **public** repository named exactly `<YOUR_USERNAME>` (for example
    `github.com/<YOUR_USERNAME>/<YOUR_USERNAME>`). GitHub treats this name as
@@ -102,7 +114,11 @@ Rendering rules that shape this design:
 - SVGs are rendered as images, so their embedded CSS and SMIL animation work,
   but they cannot load external fonts or run scripts.
 
-## 4. Creating the custom profile design
+---
+
+<div align="center">
+<samp><b>04 / CREATING THE CUSTOM PROFILE DESIGN</b></samp>
+</div>
 
 The page follows a few rules rather than a template:
 
@@ -128,7 +144,11 @@ The page follows a few rules rather than a template:
 - **Motion once.** Charts reveal left to right with SMIL animations that freeze
   at their final frame; nothing loops.
 
-## 5. ASCII portrait pipeline
+---
+
+<div align="center">
+<samp><b>05 / ASCII PORTRAIT PIPELINE</b></samp>
+</div>
 
 This is a manual, one-time step. Nothing in the workflow or on Vercel touches
 `ascii.svg`. The original photo is not part of the repository and is not needed
@@ -184,7 +204,11 @@ deactivate
 - `embed_portrait_font.py` is idempotent; running it twice changes nothing.
 - Keep the virtual environment and the photo out of the repository.
 
-## 6. Custom SVG heading system
+---
+
+<div align="center">
+<samp><b>06 / CUSTOM SVG HEADING SYSTEM</b></samp>
+</div>
 
 `draw_heading(word)` in `scripts/generate_stats.py` draws a 620 x 26 SVG: the
 word in 16 px semibold JetBrains Mono, followed by a 1 px hairline to the right
@@ -216,7 +240,11 @@ Markdown headings (`##`) would render in GitHub's own font with GitHub's
 underline, and there is no way to restyle them. SVG headings are the only way
 to keep the headings in the same face and colours as the graphics.
 
-## 7. GitHub contribution statistics
+---
+
+<div align="center">
+<samp><b>07 / GITHUB CONTRIBUTION STATISTICS</b></samp>
+</div>
 
 `scripts/generate_stats.py` makes one GraphQL request to
 `https://api.github.com/graphql` asking for:
@@ -262,7 +290,11 @@ one-line summary plus the list of updated files.
 The **fallback** is the committed copy of `stats.svg` and `streak.svg`. The
 Vercel function serves it when it cannot reach GitHub (section 9).
 
-## 8. GitHub Actions automation
+---
+
+<div align="center">
+<samp><b>08 / GITHUB ACTIONS AUTOMATION</b></samp>
+</div>
 
 The workflow is `.github/workflows/stats.yml`:
 
@@ -332,7 +364,11 @@ the repository's default workflow permissions are read-only. Only an
 organisation or enterprise policy that caps token permissions would block it.
 Actions must be enabled for the repository (Settings -> Actions -> General).
 
-## 9. Vercel dynamic statistics
+---
+
+<div align="center">
+<samp><b>09 / VERCEL DYNAMIC STATISTICS</b></samp>
+</div>
 
 `https://<YOUR_PROJECT>.vercel.app/stats.svg` and `/streak.svg` are produced
 per request:
@@ -381,7 +417,11 @@ every commit to the default branch triggers a new deployment. That includes
 the workflow's daily commit, so the bundled fallback stays at most about a day
 old.
 
-## 10. Deployment
+---
+
+<div align="center">
+<samp><b>10 / DEPLOYMENT</b></samp>
+</div>
 
 1. Push the repository to GitHub.
 2. In Vercel, choose **Add New -> Project** and import the repository.
@@ -417,7 +457,11 @@ old.
 Never commit tokens. `GITHUB_TOKEN` and `GH_LOGIN` live only in Vercel's
 settings; the Actions workflow uses its own built-in token.
 
-## 11. Local development
+---
+
+<div align="center">
+<samp><b>11 / LOCAL DEVELOPMENT</b></samp>
+</div>
 
 Clone:
 
@@ -480,7 +524,11 @@ Linux/macOS: the same two commands, with `curl` instead of `curl.exe`.
 - Without it, the response says `fallback` and returns the committed SVG.
 - Stop the server with Ctrl+C.
 
-## 12. Customization
+---
+
+<div align="center">
+<samp><b>12 / CUSTOMIZATION</b></samp>
+</div>
 
 | what | where |
 |---|---|
@@ -499,7 +547,11 @@ If you add a new generated file, add it to `FILES` in the workflow. If the
 Vercel function starts reading a new file, add it to `includeFiles` in
 `vercel.json`.
 
-## 13. Troubleshooting
+---
+
+<div align="center">
+<samp><b>13 / TROUBLESHOOTING</b></samp>
+</div>
 
 **An SVG doesn't update after a commit.** GitHub caches repository images for
 a few minutes, and the image proxy caches external ones. Wait, then hard-refresh.
@@ -557,7 +609,11 @@ files. This repository doesn't do that.
 case-sensitive), check that the file is committed on the default branch, and
 for the Vercel graphics, open the URL directly.
 
-## 14. Maintenance checklist
+---
+
+<div align="center">
+<samp><b>14 / MAINTENANCE CHECKLIST</b></samp>
+</div>
 
 - **README:** every `src`/`href` exists; graphics keep `width="620"`; no
   `<style>` or `style=` (GitHub strips them); the Vercel URLs point at your
@@ -582,7 +638,11 @@ for the Vercel graphics, open the URL directly.
 - **Fonts:** after re-subsetting, confirm every drawn character is covered and
   update `scripts/fonts/README.md`. Keep `OFL.txt` alongside the fonts.
 
-## 15. Security notes
+---
+
+<div align="center">
+<samp><b>15 / SECURITY NOTES</b></samp>
+</div>
 
 - No token is stored in the repository. The workflow uses the built-in
   `GITHUB_TOKEN`, which is scoped to this repository and expires when the job
@@ -598,7 +658,11 @@ for the Vercel graphics, open the URL directly.
 - If a token leaks, revoke it on GitHub immediately, then replace it in Vercel
   and redeploy.
 
-## 16. Recreating the profile from zero
+---
+
+<div align="center">
+<samp><b>16 / RECREATING THE PROFILE FROM ZERO</b></samp>
+</div>
 
 1. Create the public repository `<YOUR_USERNAME>/<YOUR_USERNAME>`.
 2. Copy this repository's files into it.
