@@ -1,17 +1,28 @@
-# Profile Setup
+<div align="center">
 
-How this GitHub profile is built, and how to recreate the same system for your
-own account. Replace `<YOUR_USERNAME>` with your GitHub username and
-`<YOUR_PROJECT>` with your Vercel project name throughout.
+<img src="https://raw.githubusercontent.com/yo5on/yo5on/main/hd-projects.svg" width="620" alt="projects"/>
+
+<samp><b>GITHUB PROFILE SETUP</b></samp>
+
+<samp>github · markdown · github actions · python · vercel · svg</samp>
+
+</div>
+
+---
+
+<div align="center"><samp>How this GitHub profile is built, and how to recreate the same system for your own account.</samp></div>
+
+---
 
 ---
 
 <div align="center">
-<samp><b>01 / WHAT THIS PROFILE ARCHITECTURE DOES</b></samp>
+<samp><b>What this profile architecture does</b></samp>
 </div>
 
-The profile is a single `README.md` that GitHub renders on your profile page.
-Every visual element that needs the page's own typeface is an SVG, because
+<samp>The profile is a single `README.md` that GitHub renders on your profile page.</samp>
+
+<samp>Every visual element that needs the page's own typeface is an SVG, because
 GitHub strips `<style>`, `style=` and `<script>` from READMEs.
 
 ```
@@ -40,12 +51,12 @@ There are three kinds of graphic:
 | `stats.svg`, `streak.svg` | `scripts/generate_stats.py`, called by `api/contributions.py` | live on Vercel; the committed copies are refreshed daily as the fallback |
 
 Everything uses the Python standard library at runtime, an embedded subset of
-JetBrains Mono, and no third-party image or statistics service.
+JetBrains Mono, and no third-party image or statistics service.</samp>
 
 ---
 
 <div align="center">
-<samp><b>02 / REPOSITORY STRUCTURE</b></samp>
+<samp><b>Repository Structure</b></samp>
 </div>
 
 ```
@@ -82,18 +93,18 @@ JetBrains Mono, and no third-party image or statistics service.
         └── README.md          what each subset covers
 ```
 
-- `README.md`: layout, bio, stack, projects, and the image references.
-- `ascii.svg`: the portrait. Generated once from a photo; not touched by automation.
-- Generated SVGs: written by `generate_stats.py`. The workflow commits them only when their content changes.
-- `scripts/`: all generators. `generate_stats.py` has no dependencies; `make_portrait.py` needs the imaging packages in section 5.
-- `scripts/fonts/`: JetBrains Mono subsets, inlined into the SVGs as base64. An `<img>`-loaded SVG cannot fetch an external font, so inlining is the only way to use a custom face.
-- `api/`, `middleware.ts`, `vercel.json`, `package.json`: the Vercel deployment that serves `stats.svg` and `streak.svg` with fresh data.
-- `.github/workflows/`: the scheduled job that regenerates and commits graphics.
+- <samp>`README.md`: layout, bio, stack, projects, and the image references.</samp>
+- <samp>`ascii.svg`: the portrait. Generated once from a photo; not touched by automation.</samp>
+- <samp>Generated SVGs: written by `generate_stats.py`. The workflow commits them only when their content changes.</samp>
+- <samp>`scripts/`: all generators. `generate_stats.py` has no dependencies; `make_portrait.py` needs the imaging packages in section 5.</samp>
+- <samp>`scripts/fonts/`: JetBrains Mono subsets, inlined into the SVGs as base64. An `<img>`-loaded SVG cannot fetch an external font, so inlining is the only way to use a custom face.</samp>
+- <samp>`api/`, `middleware.ts`, `vercel.json`, `package.json`: the Vercel deployment that serves `stats.svg` and `streak.svg` with fresh data.</samp>
+- <samp>`.github/workflows/`: the scheduled job that regenerates and commits graphics.</samp>
 
 ---
 
 <div align="center">
-<samp><b>03 / GITHUB PROFILE REPOSITORY SETUP</b></samp>
+<samp><b>GitHub Profile Repository Setup</b></samp>
 </div>
 
 1. Create a **public** repository named exactly `<YOUR_USERNAME>` (for example
@@ -106,48 +117,48 @@ JetBrains Mono, and no third-party image or statistics service.
 
 Rendering rules that shape this design:
 
-- Raw HTML is allowed but sanitised: no `<style>`, no `style=` attributes, no
+- <samp>Raw HTML is allowed but sanitised: no `<style>`, no `style=` attributes, no</samp>
   `<script>`. Attributes such as `align`, `width` and `alt` survive.
-- Images are proxied by GitHub. Relative paths (`./ascii.svg`) are served from
+- <samp>Images are proxied by GitHub. Relative paths (`./ascii.svg`) are served from</samp>
   the repository; absolute URLs (the Vercel graphics) are fetched through
   GitHub's image proxy.
-- SVGs are rendered as images, so their embedded CSS and SMIL animation work,
+- <samp>SVGs are rendered as images, so their embedded CSS and SMIL animation work,</samp>
   but they cannot load external fonts or run scripts.
 
 ---
 
 <div align="center">
-<samp><b>04 / CREATING THE CUSTOM PROFILE DESIGN</b></samp>
+<samp><b>Profile UI</b></samp>
 </div>
 
 The page follows a few rules rather than a template:
 
-- **One column.** Every graphic is 620 px wide (`WIDTH` in
+- <samp>**One column.** Every graphic is 620 px wide (`WIDTH` in</samp>
   `generate_stats.py`, and `width="620"` in the README). The portrait is
   narrower at 460 px so it reads as the page's cover.
-- **Centred cover, left-aligned body.** The portrait, the contribution total and
+- <samp>**Centred cover, left-aligned body.** The portrait, the contribution total and</samp>
   the links sit inside `<div align="center">`; the sections below are
   left-aligned.
-- **One typeface.** JetBrains Mono is embedded in every SVG. Plain text that
+- <samp>**One typeface.** JetBrains Mono is embedded in every SVG. Plain text that</samp>
   should look monospaced (the stack line, project tags) uses `<samp>`, which
   GitHub renders in a monospace face without needing styles.
-- **SVG headings.** Section headings are SVGs (section 6), so they use the same
+- <samp>**SVG headings.** Section headings are SVGs (section 6), so they use the same</samp>
   face as the graphics instead of GitHub's sans-serif headings.
 - **Projects as text.** Each project is a bold link, a `<samp>` tag line and one
   sentence. No cards or badges.
-- **Restrained colour.** Graphics use a grey palette defined in
+- <samp>**Restrained colour.** Graphics use a grey palette defined in</samp>
   `generate_stats.py` (`LIGHT` and `DARK`): data ink, emphasis, dimmed labels,
   and hairline rules. Backgrounds are transparent.
-- **Light and dark mode.** Each SVG carries both palettes and switches with an
+- <samp>**Light and dark mode.** Each SVG carries both palettes and switches with an</samp>
   internal `@media (prefers-color-scheme: dark)` rule. Section 13 covers the
   limits of this.
-- **Motion once.** Charts reveal left to right with SMIL animations that freeze
+- <samp>**Motion once.** Charts reveal left to right with SMIL animations that freeze</samp>
   at their final frame; nothing loops.
 
 ---
 
 <div align="center">
-<samp><b>05 / ASCII PORTRAIT PIPELINE</b></samp>
+<samp><b>ASCII Portrait Pipeline</b></samp>
 </div>
 
 This is a manual, one-time step. Nothing in the workflow or on Vercel touches
@@ -197,17 +208,17 @@ python3 scripts/embed_portrait_font.py
 deactivate
 ```
 
-- The first run downloads a background-removal model of about 176 MB.
-- `--preview` also prints the ASCII to the terminal, which is the quickest way
+- <samp>The first run downloads a background-removal model of about 176 MB.</samp>
+- <samp>`--preview` also prints the ASCII to the terminal, which is the quickest way</samp>
   to tune the crop.
-- A second positional argument changes the output path (default `ascii.svg`).
-- `embed_portrait_font.py` is idempotent; running it twice changes nothing.
-- Keep the virtual environment and the photo out of the repository.
+- <samp>A second positional argument changes the output path (default `ascii.svg`).</samp>
+- <samp>`embed_portrait_font.py` is idempotent; running it twice changes nothing.</samp>
+- <samp>Keep the virtual environment and the photo out of the repository.</samp>
 
 ---
 
 <div align="center">
-<samp><b>06 / CUSTOM SVG HEADING SYSTEM</b></samp>
+<samp><b>Custom SVG Heading System</b></samp>
 </div>
 
 `draw_heading(word)` in `scripts/generate_stats.py` draws a 620 x 26 SVG: the
@@ -243,16 +254,16 @@ to keep the headings in the same face and colours as the graphics.
 ---
 
 <div align="center">
-<samp><b>07 / GITHUB CONTRIBUTION STATISTICS</b></samp>
+<samp><b>GitHub Contribution Statistics</b></samp>
 </div>
 
 `scripts/generate_stats.py` makes one GraphQL request to
 `https://api.github.com/graphql` asking for:
 
-- `contributionsCollection.contributionCalendar` over the last 365 days. The
+- <samp>`contributionsCollection.contributionCalendar` over the last 365 days. The</samp>
   window is pinned to whole UTC days, so repeated runs on the same day give
   identical output.
-- The user's first 100 **public, owned, non-fork** repositories, with up to 12
+- <samp>The user's first 100 **public, owned, non-fork** repositories, with up to 12</samp>
   languages each, ordered by size. Pinning `privacy: PUBLIC` keeps results the
   same no matter which token is used.
 
@@ -272,9 +283,9 @@ Ties are sorted by name so equal values never reorder between runs.
 
 Graphics:
 
-- `stats.svg`: the total, active days, best week, and a weekly sparkline.
-- `streak.svg`: current and longest streak with their date ranges.
-- `langs.svg`: two small bar charts, by bytes and by repos.
+- <samp>`stats.svg`: the total, active days, best week, and a weekly sparkline.</samp>
+- <samp>`streak.svg`: current and longest streak with their date ranges.</samp>
+- <samp>`langs.svg`: two small bar charts, by bytes and by repos.</samp>
 
 Environment variables:
 
@@ -293,7 +304,7 @@ Vercel function serves it when it cannot reach GitHub (section 9).
 ---
 
 <div align="center">
-<samp><b>08 / GITHUB ACTIONS AUTOMATION</b></samp>
+<samp><b>GitHub Actions Automation</b></samp>
 </div>
 
 The workflow is `.github/workflows/stats.yml`:
@@ -301,9 +312,6 @@ The workflow is `.github/workflows/stats.yml`:
 ```yaml
 name: refresh stats
 
-# Runs once a day and on demand. The commit below is pushed with GITHUB_TOKEN,
-# and events created by GITHUB_TOKEN never start new workflow runs, so the job
-# cannot re-trigger itself.
 on:
   schedule:
     - cron: "30 18 * * *"
@@ -343,20 +351,20 @@ jobs:
           git push
 ```
 
-- **Schedule:** `30 18 * * *` is 18:30 UTC every day. Cron in Actions is always
+- <samp>**Schedule:** `30 18 * * *` is 18:30 UTC every day. Cron in Actions is always</samp>
   UTC, and scheduled runs can start a few minutes late.
-- **Manual runs:** `workflow_dispatch` adds a "Run workflow" button on the
+- <samp>**Manual runs:** `workflow_dispatch` adds a "Run workflow" button on the</samp>
   Actions tab.
-- **Token:** the built-in `GITHUB_TOKEN`; there's no secret to create.
+- <samp>**Token:** the built-in `GITHUB_TOKEN`; there's no secret to create.</samp>
   `GH_LOGIN` comes from the repository owner, so it is correct in your fork
   automatically.
-- **Permissions:** `contents: write` is the only permission, needed to push the
+- <samp>**Permissions:** `contents: write` is the only permission, needed to push the</samp>
   commit.
-- **Commits:** only the listed generated files are staged, and only when they
+- <samp>**Commits:** only the listed generated files are staged, and only when they</samp>
   changed. `stats.svg` usually changes every day because the 365-day window
   moves. The headings normally never change.
-- **Concurrency:** a manual run and a scheduled run queue instead of racing.
-- **No loops:** pushes made with `GITHUB_TOKEN` do not trigger workflows, and
+- <samp>**Concurrency:** a manual run and a scheduled run queue instead of racing.</samp>
+- <samp>**No loops:** pushes made with `GITHUB_TOKEN` do not trigger workflows, and</samp>
   the workflow has no `push` trigger anyway.
 
 Because the workflow declares `contents: write` itself, it can push even if
@@ -367,7 +375,7 @@ Actions must be enabled for the repository (Settings -> Actions -> General).
 ---
 
 <div align="center">
-<samp><b>09 / VERCEL DYNAMIC STATISTICS</b></samp>
+<samp><b>Vercel Dynamic Statistics</b></samp>
 </div>
 
 `https://<YOUR_PROJECT>.vercel.app/stats.svg` and `/streak.svg` are produced
@@ -420,7 +428,7 @@ old.
 ---
 
 <div align="center">
-<samp><b>10 / DEPLOYMENT</b></samp>
+<samp><b>Deployment</b></samp>
 </div>
 
 1. Push the repository to GitHub.
@@ -460,7 +468,7 @@ settings; the Actions workflow uses its own built-in token.
 ---
 
 <div align="center">
-<samp><b>11 / LOCAL DEVELOPMENT</b></samp>
+<samp><b>Local Development</b></samp>
 </div>
 
 Clone:
@@ -513,21 +521,20 @@ PowerShell:
 
 ```powershell
 python -c "from http.server import HTTPServer; from api.contributions import handler; HTTPServer(('127.0.0.1', 8000), handler).serve_forever()"
-# in a second terminal:
 curl.exe -sI "http://127.0.0.1:8000/?graphic=stats"
 ```
 
 Linux/macOS: the same two commands, with `curl` instead of `curl.exe`.
 
-- With `GITHUB_TOKEN` set in that terminal, the response says
+- <samp>With `GITHUB_TOKEN` set in that terminal, the response says</samp>
   `X-Stats-Source: github`.
-- Without it, the response says `fallback` and returns the committed SVG.
-- Stop the server with Ctrl+C.
+- <samp>Without it, the response says `fallback` and returns the committed SVG.</samp>
+- <samp>Stop the server with Ctrl+C.</samp>
 
 ---
 
 <div align="center">
-<samp><b>12 / CUSTOMIZATION</b></samp>
+<samp><b>Customization</b></samp>
 </div>
 
 | what | where |
@@ -550,7 +557,7 @@ Vercel function starts reading a new file, add it to `includeFiles` in
 ---
 
 <div align="center">
-<samp><b>13 / TROUBLESHOOTING</b></samp>
+<samp><b>Troubleshooting</b></samp>
 </div>
 
 **An SVG doesn't update after a commit.** GitHub caches repository images for
@@ -558,26 +565,26 @@ a few minutes, and the image proxy caches external ones. Wait, then hard-refresh
 Check the file on GitHub directly to confirm the commit contains the change.
 
 **Stats or streak don't load.**
-- Open `https://<YOUR_PROJECT>.vercel.app/stats.svg` directly.
-- If it 404s, the middleware didn't run: check that `middleware.ts` is at the
+- <samp>Open `https://<YOUR_PROJECT>.vercel.app/stats.svg` directly.</samp>
+- <samp>If it 404s, the middleware didn't run: check that `middleware.ts` is at the</samp>
   repository root and that the deployment installed `@vercel/functions`.
-- If it errors, look at the function logs in Vercel.
+- <samp>If it errors, look at the function logs in Vercel.</samp>
 
 **The fallback keeps appearing** (`X-Stats-Source: fallback`).
-- `GITHUB_TOKEN` is missing or expired in Vercel.
-- `GH_LOGIN` names the wrong user.
-- GitHub returned a GraphQL error.
+- <samp>`GITHUB_TOKEN` is missing or expired in Vercel.</samp>
+- <samp>`GH_LOGIN` names the wrong user.</samp>
+- <samp>GitHub returned a GraphQL error.</samp>
 
 Fix the variable and redeploy. Environment variable changes apply only to new
 deployments.
 
 **GitHub Actions fails.**
-- Push rejected with 403: check that the `permissions:` block is still in
+- <samp>Push rejected with 403: check that the `permissions:` block is still in</samp>
   the workflow, and that no organisation policy restricts `GITHUB_TOKEN` to
   read-only.
-- Push rejected as non-fast-forward: someone pushed during the run. Run the
+- <samp>Push rejected as non-fast-forward: someone pushed during the run. Run the</samp>
   workflow again.
-- `GraphQL errors` or `no such user`: check that the repository owner is the
+- <samp>`GraphQL errors` or `no such user`: check that the repository owner is the</samp>
   account you mean to summarise.
 
 **GraphQL authentication failure locally.** `generate_stats.py` exits with
@@ -585,18 +592,18 @@ deployments.
 rejected the token: it was mistyped, has expired, or was revoked.
 
 **Fonts look wrong.**
-- The SVGs embed their fonts, so they shouldn't depend on the viewer's machine.
+- <samp>The SVGs embed their fonts, so they shouldn't depend on the viewer's machine.</samp>
   If a character renders in another face, it isn't in that subset; see
   `scripts/fonts/README.md`.
-- If the portrait looks narrower than intended, `embed_portrait_font.py` wasn't
+- <samp>If the portrait looks narrower than intended, `embed_portrait_font.py` wasn't</samp>
   run after regenerating it.
 
 **Portrait generation problems.**
-- `ModuleNotFoundError`: install the five packages from section 5 in the
+- <samp>`ModuleNotFoundError`: install the five packages from section 5 in the</samp>
   active virtual environment.
-- A washed-out or featureless face: the photo is too small, flat-lit or loosely
+- <samp>A washed-out or featureless face: the photo is too small, flat-lit or loosely</samp>
   cropped. Use `--preview` while adjusting `--crop`.
-- The first run pauses while it downloads the model.
+- <samp>The first run pauses while it downloads the model.</samp>
 
 **Dark/light rendering problems.** The SVGs switch palettes with
 `prefers-color-scheme`. Inside an `<img>`, browsers can evaluate that from the
@@ -612,56 +619,56 @@ for the Vercel graphics, open the URL directly.
 ---
 
 <div align="center">
-<samp><b>14 / MAINTENANCE CHECKLIST</b></samp>
+<samp><b>Maintenance Checklist</b></samp>
 </div>
 
-- **README:** every `src`/`href` exists; graphics keep `width="620"`; no
+- <samp>**README:** every `src`/`href` exists; graphics keep `width="620"`; no</samp>
   `<style>` or `style=` (GitHub strips them); the Vercel URLs point at your
   project.
-- **Generator:**
+- <samp>**Generator:**</samp>
   - Run it with `OUT_DIR=out` and open every output.
   - Run it twice and confirm the second run prints `updated: nothing`, so the
     workflow won't commit noise.
   - Keep it standard-library only; the Vercel function has no Python
     dependencies.
-- **Workflow:**
+- <samp>**Workflow:**</samp>
   - `FILES` lists exactly the generated files.
   - Permissions stay at `contents: write`.
   - After editing, trigger it once from the Actions tab.
-- **Vercel API:**
+- <samp>**Vercel API:**</samp>
   - `includeFiles` covers everything `generate_stats.py` reads (the fonts) and
     both fallback SVGs.
   - After deploying, check the `X-Stats-Source` header.
   - Keep `@vercel/functions` pinned and test the middleware after upgrading it.
-- **Generated SVGs:** don't hand-edit them; the next run overwrites them.
+- <samp>**Generated SVGs:** don't hand-edit them; the next run overwrites them.</samp>
   Change the generator instead.
-- **Fonts:** after re-subsetting, confirm every drawn character is covered and
+- <samp>**Fonts:** after re-subsetting, confirm every drawn character is covered and</samp>
   update `scripts/fonts/README.md`. Keep `OFL.txt` alongside the fonts.
 
 ---
 
 <div align="center">
-<samp><b>15 / SECURITY NOTES</b></samp>
+<samp><b>Security Notes</b></samp>
 </div>
 
-- No token is stored in the repository. The workflow uses the built-in
+- <samp>No token is stored in the repository. The workflow uses the built-in</samp>
   `GITHUB_TOKEN`, which is scoped to this repository and expires when the job
   ends.
-- The Vercel token belongs in Vercel's environment variables only. Use a
+- <samp>The Vercel token belongs in Vercel's environment variables only. Use a</samp>
   fine-grained token with read-only public access and an expiry date, and
   rotate it when it expires.
-- Never paste tokens into the README, commit messages, workflow files or
+- <samp>Never paste tokens into the README, commit messages, workflow files or</samp>
   generated SVGs. The generator writes only counts, dates and language names
   into the SVGs.
-- Error details from failed fetches never reach the HTTP response; the function
+- <samp>Error details from failed fetches never reach the HTTP response; the function</samp>
   serves the fallback SVG instead.
-- If a token leaks, revoke it on GitHub immediately, then replace it in Vercel
+- <samp>If a token leaks, revoke it on GitHub immediately, then replace it in Vercel</samp>
   and redeploy.
 
 ---
 
 <div align="center">
-<samp><b>16 / RECREATING THE PROFILE FROM ZERO</b></samp>
+<samp><b>Recreating the Profile From Zero</b></samp>
 </div>
 
 1. Create the public repository `<YOUR_USERNAME>/<YOUR_USERNAME>`.
