@@ -66,4 +66,8 @@ lightweight, consistent, and automatically updated.
 
 The portrait is generated with [`scripts/make_portrait.py`](scripts/make_portrait.py),<br>
 while [`scripts/generate_stats.py`](scripts/generate_stats.py) and<br>
-[GitHub Actions](.github/workflows/stats.yml) keep the profile statistics refreshed.
+[GitHub Actions](.github/workflows/stats.yml) keep the profile statistics refreshed.<br>
+The contribution and streak graphics are served live by a small<br>
+[Vercel function](api/contributions.py).
+
+Setup notes: [`PROFILE_SETUP.md`](PROFILE_SETUP.md)
