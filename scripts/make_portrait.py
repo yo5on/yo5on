@@ -32,12 +32,12 @@ Dark mode needs its own file, not just a lighter ink. The ramp encodes shadow
 as density, which only reads correctly when the ink is darker than the page;
 recolour the same characters light-on-dark and the portrait turns into a
 negative (bright hair, hollow eyes). --dark inverts the mapping instead: light
-areas of the face get dense characters and the matte stays blank. A straight
-inversion is too thin, though — dark hair carries most of the light portrait's
-weight and would dissolve to dots — so the outline keeps the light portrait's
-own characters and the interior has a mid-tone floor. Each file bakes its ink
-in with no media query, and the README picks one with <picture>, which follows
-the GitHub theme rather than the OS.
+areas of the face get dense characters and the matte stays blank. It is one
+continuous tone field: ink = matte coverage x tone, so the silhouette fades
+into the page exactly as softly as the light one does, with no outline or halo,
+and a mid-tone floor keeps dark hair from dissolving to dots. Each file bakes
+its ink in with no media query, and the README picks one with <picture>, which
+follows the GitHub theme rather than the OS.
 
 Motion is SMIL, because GitHub strips <script> from READMEs: each row is
 revealed by a clipPath wipe with a cursor block riding its edge, staggered top
@@ -57,8 +57,13 @@ CLAHE_CLIP = 3.0           # higher amplifies skin texture into noise
 GAMMA = 1.0                # ramp mapping exponent
 CURVE = 1.7                # the darkening curve — the difference-maker
 DARK_FLOOR = 6             # --dark: lowest step inside the subject ("+")
-DARK_GAMMA = 0.7           # --dark: lifts the face; ~73% of the light ink,
+DARK_GAMMA = 0.7           # --dark: lifts the face; ~74% of the light ink,
                            # which reads as equal weight light-on-dark
+# ink coverage of each glyph (share of its cell), measured from rendered
+# monospace glyphs; --dark matches density on this, not on ramp position
+INK = {" ": 0.0, ".": 0.029, "`": 0.018, ":": 0.048, "-": 0.030, "=": 0.087,
+       "+": 0.096, "*": 0.088, "c": 0.108, "s": 0.126, "#": 0.192, "%": 0.209,
+       "@": 0.287}
 CROP_BOTTOM = 0.0          # fraction to trim off the bottom (torso, chair)
 ROW_RATIO = 0.48           # monospace cells are about twice as tall as wide
 
@@ -93,6 +98,61 @@ def prep(path, crop=None):
     return Image.fromarray(gray), Image.fromarray(alpha)
 
 
+def pick(cov, edge, r, c):
+    """The glyph whose ink is nearest `cov`. At the edge a blank is allowed, and
+    near-equal glyphs alternate by position so a fade never repeats one shape
+    down a column — a stack of ":" or "`" reads as a drawn line."""
+    pool = ([" "] if edge else []) + [ch for ch in RAMP if ch not in " `"]
+    best = min(pool, key=lambda ch: abs(INK[ch] - cov))
+    if not edge:
+        return best
+    near = [ch for ch in pool if abs(INK[ch] - INK[best]) <= 0.02]
+    return near[(r * 7 + c * 3 + (r * c) % 5) % len(near)]
+
+
+def dark_lines(px, subject, rows, cols):
+    """Light-on-dark: one continuous tone field, density = coverage x tone.
+
+    The light portrait's soft edge comes from the matte blending into the white
+    page. Here the same blend fades into the dark page instead: each cell's ink
+    is its matte coverage times the subject's own tone, so the silhouette
+    softens exactly as much as in light mode and is never brighter than the
+    figure beside it — no outline, no halo. The subject's tone is unblended from
+    the white composite, and the floor holds dark hair at a visible mid-tone.
+    """
+    n = len(RAMP)
+    target = [[0.0] * cols for _ in range(rows)]
+    edge = [[False] * cols for _ in range(rows)]
+    for r in range(rows):
+        for c in range(cols):
+            i = r * cols + c
+            a = subject[i] / 255.0
+            if a < 0.08:
+                continue
+            v = min(1.0, max(0.0, (px[i] / 255.0 - (1 - a)) / a))   # unblend
+            tone = INK[RAMP[round(DARK_FLOOR + v ** DARK_GAMMA * (n - 1 - DARK_FLOOR))]]
+            target[r][c] = a * tone
+            edge[r][c] = a < 0.98
+    out = []
+    for r in range(rows):
+        line = ""
+        for c in range(cols):
+            t = target[r][c]
+            if t <= 0 and not edge[r][c]:
+                line += " "
+                continue
+            ch = pick(t, edge[r][c], r, c)
+            if edge[r][c]:          # diffuse the rounding error along the edge
+                e = t - INK[ch]
+                for dy, dx, w in ((0, 1, 7), (1, -1, 3), (1, 0, 5), (1, 1, 1)):
+                    y, x = r + dy, c + dx
+                    if 0 <= y < rows and 0 <= x < cols and edge[y][x]:
+                        target[y][x] = max(0.0, target[y][x] + e * w / 16)
+            line += ch
+        out.append(line.rstrip())
+    return out
+
+
 def to_lines(img, matte, cols=COLS, gamma=GAMMA, dark=False):
     w, h = img.size
     if CROP_BOTTOM:
@@ -102,32 +162,15 @@ def to_lines(img, matte, cols=COLS, gamma=GAMMA, dark=False):
 
     rows = int(cols * (h / w) * ROW_RATIO)
     px = list(img.resize((cols, rows), Image.LANCZOS).getdata())
-    subject = list(matte.resize((cols, rows), Image.BILINEAR).getdata())
+    subject = list(matte.resize((cols, rows), Image.BOX).getdata())   # coverage
     n = len(RAMP)
 
-    def light_cell(i):
-        return RAMP[min(n - 1, int((1 - px[i] / 255.0) ** gamma * n))]
-
-    def is_matte(r, c):
-        return not (0 <= r < rows and 0 <= c < cols) or subject[r * cols + c] < 128
-
-    def dark_cell(r, c):
-        # light-on-dark: brightness is density. The outline keeps the light
-        # portrait's own characters, so the silhouette and its soft edge match;
-        # inside, the floor holds dark hair at a visible mid-tone instead of
-        # letting it dissolve into the page.
-        i = r * cols + c
-        if is_matte(r, c):
-            return " "
-        if any(is_matte(r + dr, c + dc) for dr in (-1, 0, 1) for dc in (-1, 0, 1)):
-            return light_cell(i)
-        v = px[i] / 255.0
-        return RAMP[round(DARK_FLOOR + v ** DARK_GAMMA * (n - 1 - DARK_FLOOR))]
-
-    out = []
-    for r in range(rows):
-        out.append("".join(dark_cell(r, c) if dark else light_cell(r * cols + c)
-                           for c in range(cols)).rstrip())
+    if not dark:
+        out = ["".join(RAMP[min(n - 1, int((1 - px[r * cols + c] / 255.0) ** gamma
+                                           * n))] for c in range(cols)).rstrip()
+               for r in range(rows)]
+    else:
+        out = dark_lines(px, subject, rows, cols)
 
     while out and not out[0].strip():
         out.pop(0)
