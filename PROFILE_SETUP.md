@@ -14,16 +14,13 @@
 
 ---
 
----
-
 <div align="center">
 <samp><b>What this profile architecture does</b></samp>
 </div>
 
 <samp>The profile is a single `README.md` that GitHub renders on your profile page.</samp>
 
-<samp>Every visual element that needs the page's own typeface is an SVG, because
-GitHub strips `<style>`, `style=` and `<script>` from READMEs.
+<samp>Every visual element that needs the page's own typeface is an SVG, because GitHub strips `<style>`, `style=` and `<script>` from READMEs.</samp>
 
 ```
 README.md  (rendered on github.com/<YOUR_USERNAME>)
@@ -42,7 +39,7 @@ README.md  (rendered on github.com/<YOUR_USERNAME>)
                                                   GitHub GraphQL API
 ```
 
-There are three kinds of graphic:
+<samp>There are three kinds of graphic:</samp>
 
 | graphic | made by | updated |
 |---|---|---|
@@ -50,8 +47,7 @@ There are three kinds of graphic:
 | `hd-*.svg`, `langs.svg` | `scripts/generate_stats.py` | daily, by the workflow |
 | `stats.svg`, `streak.svg` | `scripts/generate_stats.py`, called by `api/contributions.py` | live on Vercel; the committed copies are refreshed daily as the fallback |
 
-Everything uses the Python standard library at runtime, an embedded subset of
-JetBrains Mono, and no third-party image or statistics service.</samp>
+<samp>Everything uses the Python standard library at runtime, an embedded subset of JetBrains Mono, and no third-party image or statistics service.</samp>
 
 ---
 
