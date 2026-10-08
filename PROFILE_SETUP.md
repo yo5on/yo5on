@@ -616,28 +616,35 @@ for the Vercel graphics, open the URL directly.
 <samp><b>Maintenance Checklist</b></samp>
 </div>
 
-- <samp>**README:** every `src`/`href` exists; graphics keep `width="620"`; no</samp>
-  `<style>` or `style=` (GitHub strips them); the Vercel URLs point at your
-  project.
-- <samp>**Generator:**</samp>
-  - Run it with `OUT_DIR=out` and open every output.
-  - Run it twice and confirm the second run prints `updated: nothing`, so the
-    workflow won't commit noise.
-  - Keep it standard-library only; the Vercel function has no Python
-    dependencies.
-- <samp>**Workflow:**</samp>
-  - `FILES` lists exactly the generated files.
-  - Permissions stay at `contents: write`.
-  - After editing, trigger it once from the Actions tab.
-- <samp>**Vercel API:**</samp>
-  - `includeFiles` covers everything `generate_stats.py` reads (the fonts) and
-    both fallback SVGs.
-  - After deploying, check the `X-Stats-Source` header.
-  - Keep `@vercel/functions` pinned and test the middleware after upgrading it.
-- <samp>**Generated SVGs:** don't hand-edit them; the next run overwrites them.</samp>
-  Change the generator instead.
-- <samp>**Fonts:** after re-subsetting, confirm every drawn character is covered and</samp>
-  update `scripts/fonts/README.md`. Keep `OFL.txt` alongside the fonts.
+<samp><b>README</b></samp>
+
+- <samp>Every <code>src</code>/<code>href</code> exists; graphics keep <code>width="620"</code>; no <code>&lt;style&gt;</code> or <code>style=</code> (GitHub strips them); the Vercel URLs point at your project.</samp>
+
+<samp><b>Generator</b></samp>
+
+- <samp>Run it with <code>OUT_DIR=out</code> and open every output.</samp>
+- <samp>Run it twice and confirm the second run prints <code>updated: nothing</code>, so the workflow won't commit noise.</samp>
+- <samp>Keep it standard-library only; the Vercel function has no Python dependencies.</samp>
+
+<samp><b>Workflow</b></samp>
+
+- <samp><code>FILES</code> lists exactly the generated files.</samp>
+- <samp>Permissions stay at <code>contents: write</code>.</samp>
+- <samp>After editing, trigger it once from the Actions tab.</samp>
+
+<samp><b>Vercel API</b></samp>
+
+- <samp><code>includeFiles</code> covers everything <code>generate_stats.py</code> reads (the fonts) and both fallback SVGs.</samp>
+- <samp>After deploying, check the <code>X-Stats-Source</code> header.</samp>
+- <samp>Keep <code>@vercel/functions</code> pinned and test the middleware after upgrading it.</samp>
+
+<samp><b>Generated SVGs</b></samp>
+
+- <samp>Don't hand-edit generated SVGs; the next run overwrites them. Change the generator instead.</samp>
+
+<samp><b>Fonts</b></samp>
+
+- <samp>After re-subsetting, confirm every drawn character is covered and update <code>scripts/fonts/README.md</code>. Keep <code>OFL.txt</code> alongside the fonts.</samp>
 
 ---
 
@@ -645,19 +652,11 @@ for the Vercel graphics, open the URL directly.
 <samp><b>Security Notes</b></samp>
 </div>
 
-- <samp>No token is stored in the repository. The workflow uses the built-in</samp>
-  `GITHUB_TOKEN`, which is scoped to this repository and expires when the job
-  ends.
-- <samp>The Vercel token belongs in Vercel's environment variables only. Use a</samp>
-  fine-grained token with read-only public access and an expiry date, and
-  rotate it when it expires.
-- <samp>Never paste tokens into the README, commit messages, workflow files or</samp>
-  generated SVGs. The generator writes only counts, dates and language names
-  into the SVGs.
-- <samp>Error details from failed fetches never reach the HTTP response; the function</samp>
-  serves the fallback SVG instead.
-- <samp>If a token leaks, revoke it on GitHub immediately, then replace it in Vercel</samp>
-  and redeploy.
+- <samp>No token is stored in the repository. The workflow uses the built-in <code>GITHUB_TOKEN</code>, which is scoped to this repository and expires when the job ends.</samp>
+- <samp>The Vercel token belongs in Vercel's environment variables only. Use a fine-grained token with read-only public access and an expiry date, and rotate it when it expires.</samp>
+- <samp>Never paste tokens into the README, commit messages, workflow files or generated SVGs. The generator writes only counts, dates and language names into the SVGs.</samp>
+- <samp>Error details from failed fetches never reach the HTTP response; the function serves the fallback SVG instead.</samp>
+- <samp>If a token leaks, revoke it on GitHub immediately, then replace it in Vercel and redeploy.</samp>
 
 ---
 
@@ -665,21 +664,26 @@ for the Vercel graphics, open the URL directly.
 <samp><b>Recreating the Profile From Zero</b></samp>
 </div>
 
-1. Create the public repository `<YOUR_USERNAME>/<YOUR_USERNAME>`.
-2. Copy this repository's files into it.
-3. Edit `README.md`: your bio, stack, projects and links. Leave the Vercel URLs
-   for now.
-4. Generate your portrait (section 5), or remove the portrait image from the
-   README.
-5. Change the `GH_LOGIN` defaults in `scripts/generate_stats.py` and
-   `api/contributions.py` to your username.
-6. Run `generate_stats.py` locally (section 11) to produce your own
-   `stats.svg`, `streak.svg`, `langs.svg` and headings, then commit them.
-7. Push, then run "refresh stats" once from the Actions tab to confirm the
-   workflow can commit.
-8. Import the repository into Vercel, set `GITHUB_TOKEN` and `GH_LOGIN`, and
-   deploy (section 10).
-9. Confirm `curl -sI https://<YOUR_PROJECT>.vercel.app/stats.svg` reports
-   `X-Stats-Source: github`.
-10. Put your Vercel URLs in the README and push.
-11. Open `github.com/<YOUR_USERNAME>` in both light and dark themes.
+<samp>Use the following order to recreate the complete profile system:</samp>
+
+<samp>1. Create the public repository <code>&lt;YOUR_USERNAME&gt;/&lt;YOUR_USERNAME&gt;</code>.</samp>
+
+<samp>2. Copy this repository's files into it.</samp>
+
+<samp>3. Edit <code>README.md</code>: your bio, stack, projects and links. Leave the Vercel URLs for now.</samp>
+
+<samp>4. Generate your portrait (section 5), or remove the portrait image from the README.</samp>
+
+<samp>5. Change the <code>GH_LOGIN</code> defaults in <code>scripts/generate_stats.py</code> and <code>api/contributions.py</code> to your username.</samp>
+
+<samp>6. Run <code>generate_stats.py</code> locally (section 11) to produce your own <code>stats.svg</code>, <code>streak.svg</code>, <code>langs.svg</code> and headings, then commit them.</samp>
+
+<samp>7. Push, then run "refresh stats" once from the Actions tab to confirm the workflow can commit.</samp>
+
+<samp>8. Import the repository into Vercel, set <code>GITHUB_TOKEN</code> and <code>GH_LOGIN</code>, and deploy (section 10).</samp>
+
+<samp>9. Confirm <code>curl -sI https://&lt;YOUR_PROJECT&gt;.vercel.app/stats.svg</code> reports <code>X-Stats-Source: github</code>.</samp>
+
+<samp>10. Put your Vercel URLs in the README and push.</samp>
+
+<samp>11. Open <code>github.com/&lt;YOUR_USERNAME&gt;</code> in both light and dark themes.</samp>
