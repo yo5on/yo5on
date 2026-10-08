@@ -18,9 +18,13 @@ Why inline it at all:
 | file | weight | covers |
 |---|---|---|
 | `jbmono-ramp.woff2` | 400 | the 13 ramp characters in `ascii.svg` |
-| `jbmono-head.woff2` | 600 | the letters used by the section headings |
-| `jbmono-400.woff2` | 400 | basic latin, for the stat graphics |
-| `jbmono-600.woff2` | 600 | basic latin, for the stat graphics |
+| `jbmono-head.woff2` | 600 | the letters used by the section headings: `abceghijkoprstu` and space |
+| `jbmono-400.woff2` | 400 | basic latin plus `·` `–` `—`, for the stat graphics |
+| `jbmono-600.woff2` | 600 | basic latin plus `·` `–` `—`, for the stat graphics |
+
+A heading word that needs a letter outside the heading subset still renders,
+but that letter falls back to the viewer's own monospace. Re-subset
+`jbmono-head.woff2` from the JetBrains Mono release when adding one.
 
 Licensed under the SIL Open Font License 1.1 — see `OFL.txt`. Subsetting and
 redistribution in this form are permitted; the reserved font name is unchanged.
