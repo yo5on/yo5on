@@ -59,7 +59,8 @@ class handler(BaseHTTPRequestHandler):
         try:
             svgs, source = _generate()
             body = svgs[graphic]
-            # Keep the short-lived cache only inside this function instance.\n            # GitHub image proxy and CDN layers should revalidate every request.\n            cache = "no-cache, no-store, max-age=0, must-revalidate"
+            # Keep the short-lived cache only inside this function instance.
+            # GitHub image proxy and CDN layers should revalidate every request.\n            cache = "no-cache, no-store, max-age=0, must-revalidate"
         except (Exception, SystemExit):
             # GraphQL errors, missing secrets, timeouts, and runtime failures never
             # reach the public response. The static SVGs remain safe fallbacks.
