@@ -11,7 +11,7 @@ from scripts import generate_stats
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FRESH_FOR = 15 * 60
+FRESH_FOR = 5 * 60
 # A refetch only happens once the cache is older than FRESH_FOR, so the stale
 # window must be longer for _fallback to ever use it. A day matches how often
 # the workflow refreshes the checked-in snapshot, so memory is never staler.
@@ -59,7 +59,7 @@ class handler(BaseHTTPRequestHandler):
         try:
             svgs, source = _generate()
             body = svgs[graphic]
-            cache = "public, max-age=0, s-maxage=900"
+            # Keep the short-lived cache only inside this function instance.\n            # GitHub image proxy and CDN layers should revalidate every request.\n            cache = "no-cache, no-store, max-age=0, must-revalidate"
         except (Exception, SystemExit):
             # GraphQL errors, missing secrets, timeouts, and runtime failures never
             # reach the public response. The static SVGs remain safe fallbacks.
