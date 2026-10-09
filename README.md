@@ -2,7 +2,7 @@
 
 <img src="./ascii.svg" width="460" alt="yo5on"/>
 
-<img src="https://yo5on.vercel.app/stats.svg" width="620" alt="Contributions in the last year"/>
+<img src="https://yo5on.vercel.app/stats.svg?v=20261009" width="620" alt="Contributions in the last year"/>
 
 <p>
   <a href="https://github.com/yo5on">GitHub</a>
@@ -53,7 +53,7 @@ RC car controlled through hand gestures using embedded hardware and motion sensi
 
 <div align="center">
 
-<img src="https://yo5on.vercel.app/streak.svg" width="620" alt="Current and longest streak"/>
+<img src="https://yo5on.vercel.app/streak.svg?v=20261009" width="620" alt="Current and longest streak"/>
 
 <img src="./langs.svg" width="620" alt="Top languages by bytes and by repo"/>
 
