@@ -315,10 +315,10 @@ jobs:
 1. <samp>**`middleware.ts`** matches exactly `/stats.svg` and `/streak.svg` and <samp>rewrites them to `/api/contributions?graphic=stats` or `?graphic=streak`. It uses `next` and `rewrite` from `@vercel/functions` (pinned in `package.json`).</samp>
 2. <samp>**`api/contributions.py`** is a Python function (a <samp>`BaseHTTPRequestHandler` subclass named `handler`). It imports `scripts/generate_stats.py`, fetches once, and draws both graphics from the same data.</samp>
 3. <samp>**Caching:**</samp>
-- <samp>In memory, per function instance, for 15 minutes. The second graphic <samp>usually comes from memory.</samp>
-- <samp>Successful responses send `Cache-Control: public, max-age=0, s-maxage=900`, <samp>so Vercel's edge caches them for 15 minutes and browsers revalidate.</samp>
-4. <samp>**Fallback:** if the fetch fails (no token, GraphQL error, timeout), the <samp>function serves the last in-memory result if it is under 24 hours old; otherwise it serves the committed `stats.svg`/`streak.svg`. Fallbacks are sent with `Cache-Control: no-store`. The response is always a 200 SVG, and no error text is ever included.</samp>
-5. <samp>**Diagnostics:** every SVG response carries `X-Stats-Source: github`, <samp>`memory` or `fallback`. Any other `graphic` value returns 404.</samp>
+   - <samp>Function-instance memory cache: 5 minutes. During that window, the second graphic can reuse the fetched summary.</samp>
+   - <samp>Successful responses send `Cache-Control: no-cache, no-store, max-age=0, must-revalidate` so browsers and image proxies should revalidate the SVG instead of keeping an old copy.</samp>
+4. <samp>**Fallback:** if the fetch fails (no token, GraphQL error, timeout), the function serves the last in-memory result if it is under 24 hours old; otherwise it serves the committed `stats.svg`/`streak.svg`. Fallbacks are sent with `Cache-Control: no-store`. The response is always a 200 SVG, and no error text is ever included.</samp>
+5. <samp>**Diagnostics:** every SVG response carries `X-Stats-Source: github`, `memory` or `fallback`. Any other `graphic` value returns 404.</samp>
 
 <samp>`vercel.json` bundles what the function reads at runtime:</samp>
 
@@ -455,7 +455,7 @@ curl.exe -sI "http://127.0.0.1:8000/?graphic=stats"
 <samp><b>Troubleshooting</b></samp>
 </div>
 
-<samp>**An SVG doesn't update after a commit.** GitHub caches repository images for a few minutes, and the image proxy caches external ones. Wait, then hard-refresh. Check the file on GitHub directly to confirm the commit contains the change.</samp>
+<samp>**An SVG doesn't update after a commit.** Open the Vercel URL directly and check its `X-Stats-Source` header. The live stats routes return `Cache-Control: no-cache, no-store, max-age=0, must-revalidate`; the README also uses a version query parameter to force GitHub's image proxy to request a new URL. If the proxy still shows an old image, increment the `v=` value on both stats and streak URLs in `README.md`, then commit the change.</samp>
 
 <samp>**Stats or streak don't load.**</samp>
 - <samp>Open `https://<YOUR_PROJECT>.vercel.app/stats.svg` directly.</samp>
