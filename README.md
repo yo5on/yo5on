@@ -5,7 +5,7 @@
 <img src="https://yo5on.vercel.app/stats.svg?v=fb1b143" width="620" alt="Contributions in the last year"/>
 
 <p>
-  <a href="https://portfolio-yo5on.vercel.app">Portfolio</a>
+  <a href="https://yo5on.runs-at.dev">Portfolio</a>
   &nbsp;·&nbsp;
   <a href="https://www.instagram.com/yo5on._/">Instagram</a>
   &nbsp;·&nbsp;
