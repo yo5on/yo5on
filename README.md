@@ -20,7 +20,7 @@
 
 > **CSE student specializing in AI/ML at Christ University, Bangalore.**<br>
 > **Building with AI, robotics, and embedded systems.**<br>
-> *Small, sharp tools over big, vague ideas.*
+> *Think. Innovate. Fabricate.*
 
 <img src="./hd-stack.svg" width="620" alt="stack"/>
 
