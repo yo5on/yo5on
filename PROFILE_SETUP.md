@@ -359,7 +359,7 @@ jobs:
 6. <samp>Check the deployment:</samp>
 
    ```bash
-   curl -sI https://<YOUR_PROJECT>.vercel.app/stats.svg
+   curl -s -D - -o /dev/null https://<YOUR_PROJECT>.vercel.app/stats.svg
    ```
 
 <samp>Expect `200`, `Content-Type: image/svg+xml` and `X-Stats-Source: github`. If it says `fallback`, see section 13.</samp>
@@ -419,7 +419,7 @@ python -m py_compile scripts/generate_stats.py scripts/make_portrait.py scripts/
 
 ```powershell
 python -c "from http.server import HTTPServer; from api.contributions import handler; HTTPServer(('127.0.0.1', 8000), handler).serve_forever()"
-curl.exe -sI "http://127.0.0.1:8000/?graphic=stats"
+curl.exe -s -D - -o NUL "http://127.0.0.1:8000/?graphic=stats"
 ```
 
 <samp>Linux/macOS: the same two commands, with `curl` instead of `curl.exe`.</samp>
@@ -561,7 +561,7 @@ curl.exe -sI "http://127.0.0.1:8000/?graphic=stats"
 
 <samp>8. Import the repository into Vercel, set <code>GITHUB_TOKEN</code> and <code>GH_LOGIN</code>, and deploy (section 10).</samp>
 
-<samp>9. Confirm <code>curl -sI https://&lt;YOUR_PROJECT&gt;.vercel.app/stats.svg</code> reports <code>X-Stats-Source: github</code>.</samp>
+<samp>9. Confirm <code>curl -s -D - -o /dev/null https://&lt;YOUR_PROJECT&gt;.vercel.app/stats.svg</code> reports <code>X-Stats-Source: github</code>.</samp>
 
 <samp>10. Put your Vercel URLs in the README and push.</samp>
 
