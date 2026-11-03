@@ -30,6 +30,7 @@ import os
 import sys
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
+from xml.sax.saxutils import escape
 
 API = "https://api.github.com/graphql"
 
@@ -343,7 +344,7 @@ def draw_langs(s):
             y = 26 + ri * 22
             shown = (f"{val / total * 100:.0f}%" if as_pct else f"{val}")
             p.append(f'<g opacity="0">{fade(0.24 + gi * 0.10 + ri * 0.05)}'
-                     + label(gx, y + 8, name.lower()[:11], 11, "e-f")
+                     + label(gx, y + 8, escape(name.lower()[:11]), 11, "e-f")
                      + label(gx + colw - 6, y + 8, shown, 11, "m-f", "end")
                      + '</g>')
             p.append(f'<g clip-path="url(#{cid})">'

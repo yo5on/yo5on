@@ -318,7 +318,7 @@ jobs:
    - <samp>Function-instance memory cache: 5 minutes. During that window, the second graphic can reuse the fetched summary.</samp>
    - <samp>Successful responses send `Cache-Control: no-cache, no-store, max-age=0, must-revalidate` so browsers and image proxies should revalidate the SVG instead of keeping an old copy.</samp>
 4. <samp>**Fallback:** if the fetch fails (no token, GraphQL error, timeout), the function serves the last in-memory result if it is under 24 hours old; otherwise it serves the committed `stats.svg`/`streak.svg`. Fallbacks are sent with `Cache-Control: no-store`. The response is always a 200 SVG, and no error text is ever included.</samp>
-5. <samp>**Diagnostics:** every SVG response carries `X-Stats-Source: github`, `memory` or `fallback`. Any other `graphic` value returns 404.</samp>
+5. <samp>**Diagnostics:** every SVG response carries `X-Stats-Source`: `github` (fetched now), `memory` (a cached result, fresh or kept after a failed fetch) or `fallback` (the committed file). Any other `graphic` value returns 404.</samp>
 
 <samp>`vercel.json` bundles what the function reads at runtime:</samp>
 

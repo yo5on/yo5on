@@ -45,8 +45,8 @@ def _generate():
 def _fallback(graphic):
     """Prefer recent in-process data, then the checked-in snapshot."""
     if _cached_svgs is not None and monotonic() - _cached_at <= STALE_FOR:
-        return _cached_svgs[graphic]
-    return (ROOT / f"{graphic}.svg").read_text(encoding="utf-8")
+        return _cached_svgs[graphic], "memory"
+    return (ROOT / f"{graphic}.svg").read_text(encoding="utf-8"), "fallback"
 
 
 class handler(BaseHTTPRequestHandler):
@@ -65,8 +65,7 @@ class handler(BaseHTTPRequestHandler):
         except (Exception, SystemExit):
             # GraphQL errors, missing secrets, timeouts, and runtime failures never
             # reach the public response. The static SVGs remain safe fallbacks.
-            body = _fallback(graphic)
-            source = "fallback"
+            body, source = _fallback(graphic)
             cache = "no-store"
 
         payload = body.encode("utf-8")
